@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Список отелей</title>
+  <!-- Подключение Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>Отели</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Название</th>
+      <th scope="col">Адрес</th>
+      <th scope="col">Рейтинг</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Здесь мы используем Thymeleaf для итерации по списку отелей и отображения информации об каждом из них -->
+    <tr th:each="hotel : ${hotels}">
+      <th scope="row" th:text="${hotel.id}"></th>
+      <td th:text="${hotel.name}"></td>
+      <td th:text="${hotel.address}"></td>
+      <td th:text="${hotel.rating}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
