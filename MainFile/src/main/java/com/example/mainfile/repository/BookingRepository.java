@@ -1,4 +1,10 @@
 package com.example.mainfile.repository;
 
-public interface BookingRepository {
+import com.example.mainfile.entity.BookingEntity;
+import com.example.mainfile.entity.RoomEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BookingRepository extends JpaRepository<BookingEntity, Integer> {
 }

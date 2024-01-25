@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,9 @@ import lombok.NoArgsConstructor;
 public class RoomDto {
     private Integer roomId;
     private Integer hotelId;
+    private Double roomPrice;
     private RoomType roomType;
     private RoomStatus roomStatus;
+    private List<String> additions;
     private String description;
 }
