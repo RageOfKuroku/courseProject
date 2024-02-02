@@ -16,6 +16,7 @@ import java.util.List;
 public class HotelService {
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
+
     public HotelDto getHotelById(Integer id) {
         HotelEntity hotelNotFound = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
         return hotelMapper.toDto(hotelNotFound);

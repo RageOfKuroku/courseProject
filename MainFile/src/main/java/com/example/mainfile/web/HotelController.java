@@ -21,7 +21,7 @@ public class HotelController {
         return "hotelsPage";
     }
 
-    @PostMapping("/hotels/{id}")
+    @GetMapping("/{id}")
     public String showHotelDetails(@PathVariable Integer id, Model model) {
         HotelDto hotel = service.getHotelById(id);
         model.addAttribute("hotel", hotel);

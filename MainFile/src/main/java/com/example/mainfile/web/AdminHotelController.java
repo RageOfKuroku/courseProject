@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/hotels")
 public class AdminHotelController {
 
     private final HotelService service;
@@ -20,7 +20,7 @@ public class AdminHotelController {
     public String showAddHotelForm(Model model) {
         model.addAttribute("hotel", new HotelDto());
         model.addAttribute("hotels", service.getAllHotels());
-        return "adminPage";
+        return "adminPageHotels";
     }
     @GetMapping
     public List<HotelDto> getAllHotels() {
@@ -33,10 +33,10 @@ public class AdminHotelController {
     }
 
     @PostMapping("/addHotel")
-    public String addHotelRedirection(@ModelAttribute("hotel") HotelDto hotelDto, RedirectAttributes redirectAttributes) {
+    public String addHotel(@ModelAttribute("hotel") HotelDto hotelDto, RedirectAttributes redirectAttributes) {
         service.createHotel(hotelDto);
         redirectAttributes.addFlashAttribute("message", "Отель успешно добавлен!");
-        return "redirect:/admin/addHotel";
+        return "redirect:/admin/hotels/addHotel";
     }
 
     @PutMapping("/{id}")
@@ -48,7 +48,7 @@ public class AdminHotelController {
     public String deleteHotel(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         service.deleteHotel(id);
         redirectAttributes.addFlashAttribute("message", "Отель успешно удалён!");
-        return "redirect:/admin/addHotel";
+        return "redirect:/admin/hotels/addHotel";
     }
 
 }

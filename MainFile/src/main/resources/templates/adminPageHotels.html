@@ -10,7 +10,7 @@
 <body>
 <div class="container">
   <h1>Добавить отель</h1>
-  <form th:action="@{/admin/addHotel}" th:object="${hotel}" method="post">
+  <form th:action="@{/admin/hotels/addHotel}" th:object="${hotel}" method="post">
     <div class="form-group">
       <label for="name">Название</label>
       <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Введите название отеля">
@@ -43,8 +43,16 @@
       <td th:text="${hotel.address}"></td>
       <td th:text="${hotel.rating}"></td>
       <td>
-        <form th:action="@{/admin/delete/{id}(id=${hotel.hotelId})}" th:method="post">
+        <form th:action="@{/admin/hotels/delete/{id}(id=${hotel.hotelId})}" th:method="post">
           <input type="submit" value="Удалить" />
+        </form>
+      </td>
+      <td>
+        <form class="d-flex" th:action="@{/admin/hotels/rooms/{id}(id=${hotel.hotelId})}" method="get">
+          <button class="btn btn-outline-dark" type="submit">
+            <i class="bi-cart-fill me-1"></i>
+            Просмотреть
+          </button>
         </form>
       </td>
     </tr>

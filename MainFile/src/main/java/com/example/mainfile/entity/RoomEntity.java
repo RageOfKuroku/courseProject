@@ -20,9 +20,13 @@ public class RoomEntity {
     private Integer roomId;
     private Integer hotelId;
     private Double roomPrice;
+    @Enumerated
     private RoomType roomType;
+    @Enumerated
     private RoomStatus roomStatus;
     @ElementCollection
     private List<String> additions;
     private String description;
+    @ManyToOne
+    private HotelEntity hotel;
 }

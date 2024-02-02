@@ -18,6 +18,7 @@ public class HotelDto {
     private Double rating;
     private String description;
     private byte[] imageToShow;
+    private List<RoomDto> rooms;
     public String getImageFromBytes() {
         return Base64.getEncoder().encodeToString(imageToShow);
     }
