@@ -1,4 +1,4 @@
-package com.example.mainfile.web;
+package com.example.mainfile.web.admin;
 
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.RoomDto;

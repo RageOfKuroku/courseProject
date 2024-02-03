@@ -1,5 +1,6 @@
 package com.example.mainfile.dto;
 
+import com.example.mainfile.entity.BookingEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,6 @@ public class CustomerDto {
     private String name;
     private String email;
     private String phoneNumber;
+    private List<BookingEntity> bookings;
+
 }

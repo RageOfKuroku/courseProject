@@ -1,4 +1,4 @@
-package com.example.mainfile.web;
+package com.example.mainfile.web.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

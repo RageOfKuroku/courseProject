@@ -1,4 +1,4 @@
-package com.example.mainfile.web;
+package com.example.mainfile.web.user;
 
 import org.springframework.stereotype.Controller;
 

@@ -20,4 +20,7 @@ public class CustomerEntity {
     private String phoneNumber;
     @OneToMany
     private List<BookingEntity> bookings;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }
