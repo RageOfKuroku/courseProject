@@ -16,6 +16,7 @@ public interface HotelMapper {
     @Mapping(target = "rating", source = "rating")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "imageToShow", source = "imageToShow")
+    @Mapping(target = "rooms", ignore = true)
     HotelEntity toEntity(HotelDto dto);
     @Mapping(target = "hotelId", source = "hotelId")
     @Mapping(target = "name", source = "name")
@@ -23,6 +24,7 @@ public interface HotelMapper {
     @Mapping(target = "rating", source = "rating")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "imageToShow", source = "imageToShow")
+    @Mapping(target = "rooms", ignore = true)
     HotelDto toDto(HotelEntity entity);
 
     @Mapping(target = "hotelId", ignore = true)

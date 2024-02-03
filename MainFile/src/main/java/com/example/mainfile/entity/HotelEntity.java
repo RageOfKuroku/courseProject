@@ -1,9 +1,7 @@
 package com.example.mainfile.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 @Entity
@@ -14,7 +12,7 @@ import java.util.List;
 public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hotelId;
+    private Integer hotelId;
     private String name;
     private String address;
     private Double rating;

@@ -10,24 +10,24 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RoomMapper {
-
     @Mapping(target = "roomId",source = "roomId")
-    @Mapping(target = "hotelId",source = "hotelId")
     @Mapping(target = "roomPrice",source = "roomPrice")
     @Mapping(target = "roomType",source = "roomType")
     @Mapping(target = "roomStatus",source = "roomStatus")
     @Mapping(target = "additions",source = "additions")
     @Mapping(target = "description",source = "description")
+    @Mapping(target = "hotel", ignore = true)
     RoomEntity toEntity(RoomDto dto);
 
     @Mapping(target = "roomId",source = "roomId")
-    @Mapping(target = "hotelId",source = "hotelId")
     @Mapping(target = "roomPrice",source = "roomPrice")
     @Mapping(target = "roomType",source = "roomType")
     @Mapping(target = "roomStatus",source = "roomStatus")
     @Mapping(target = "additions",source = "additions")
     @Mapping(target = "description",source = "description")
+    @Mapping(target = "hotel", ignore = true)
     RoomDto toDto(RoomEntity entity);
+
 
     @Mapping(target = "roomId", ignore = true)
     void update(@MappingTarget RoomEntity entity, RoomDto dto);
@@ -35,6 +35,4 @@ public interface RoomMapper {
     List<RoomEntity> toListEntity(List<RoomDto> dtos);
 
     List<RoomDto> toListDto(List<RoomEntity> entities);
-
-
 }

@@ -2,11 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hotel Details</title>
+    <title>Страница отеля</title>
 </head>
 <body>
-    <h1 th:text="${hotel.name}"></h1>
-    <p th:text="${hotel.address}"></p>
-    <p th:text="${hotel.rating}"></p>
+<h1 th:text="${hotel.name}">Название отеля</h1>
+<p th:text="${hotel.address}">Адрес отеля</p>
+<p th:text="${hotel.rating}">Рейтинг отеля</p>
+<img th:src="${hotel.imageToShow}" alt="Фото отеля">
+<h2>Список комнат</h2>
+<table>
+    <tr>
+        <th>Номер</th>
+        <th>Тип</th>
+        <th>Статус</th>
+        <th>Цена</th>
+    </tr>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.roomId}">Номер комнаты</td>
+        <td th:text="${room.roomType}">Тип комнаты</td>
+        <td th:text="${room.roomStatus}">Статус комнаты</td>
+        <td th:text="${room.roomPrice}">Цена комнаты</td>
+    </tr>
+</table>
 </body>
 </html>

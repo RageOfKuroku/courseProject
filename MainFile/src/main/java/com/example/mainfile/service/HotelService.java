@@ -8,6 +8,7 @@ import com.example.mainfile.repository.HotelRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -39,7 +40,7 @@ public class HotelService {
             throw new ResourceNotFoundException("Hotel with this ID not found");
         }
     }
-
+    @Transactional
     public void deleteHotel(Integer id) {
         if(id != null) {
             hotelRepository.deleteById(id);

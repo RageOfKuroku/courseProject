@@ -3,9 +3,7 @@ package com.example.mainfile.entity;
 import com.example.mainfile.model.RoomStatus;
 import com.example.mainfile.model.RoomType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -18,7 +16,6 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roomId;
-    private Integer hotelId;
     private Double roomPrice;
     @Enumerated
     private RoomType roomType;
@@ -28,5 +25,7 @@ public class RoomEntity {
     private List<String> additions;
     private String description;
     @ManyToOne
+    @JoinColumn(name="hotel_id", nullable=false)
     private HotelEntity hotel;
 }
+

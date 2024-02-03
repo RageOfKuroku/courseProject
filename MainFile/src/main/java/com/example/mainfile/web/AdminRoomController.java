@@ -23,7 +23,7 @@ public class AdminRoomController {
     @GetMapping("/{id}")
     public String showRoomsPage(@PathVariable Integer id, Model model) {
         HotelDto hotel = hotelService.getHotelById(id);
-        RoomDto room = RoomDto.builder().hotelId(hotel.getHotelId()).build();
+        RoomDto room = RoomDto.builder().hotel(hotel).build();
         model.addAttribute("room", room);
 
         List<RoomDto> rooms = service.getRoomsByHotelId(id);
@@ -37,13 +37,14 @@ public class AdminRoomController {
     @PostMapping("/add")
     public String addRoom(@ModelAttribute RoomDto room) {
         service.addRoom(room);
-        return "redirect:/admin/hotels/rooms/" + room.getHotelId();
+        return "redirect:/admin/hotels/rooms/" + room.getHotel().getHotelId();
     }
+
 
     @PostMapping("/add/{id}")
     public String addRoom(@PathVariable Integer id, @ModelAttribute RoomDto room) {
         HotelDto hotel = hotelService.getHotelById(id);
-        room.setHotelId(hotel.getHotelId());
+        room.setHotel(hotel);
         service.addRoom(room);
         return "redirect:/admin/hotels/rooms/" + id;
     }
@@ -60,18 +61,19 @@ public class AdminRoomController {
     }
 
     @PutMapping("/{id}")
-    public RoomDto updateHotel(@PathVariable Integer id, @RequestBody RoomDto roomDto) {
+    public RoomDto updateRoom(@PathVariable Integer id, @RequestBody RoomDto roomDto) {
         return service.updateRoom(id, roomDto);
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteHotel(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String deleteRoom(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         RoomDto room = service.getRoomById(id);
-        Integer hotelId = room.getHotelId();
+        Integer hotelId = room.getHotel().getHotelId();
         service.deleteRoom(id);
         redirectAttributes.addFlashAttribute("message", "Комната успешно удалена!");
         return "redirect:/admin/hotels/rooms/" + hotelId;
     }
+
 
 }
 

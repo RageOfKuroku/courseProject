@@ -3,6 +3,8 @@ package com.example.mainfile.service;
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
+import com.example.mainfile.mapper.HotelMapper;
+import com.example.mainfile.repository.HotelRepository;
 import com.example.mainfile.repository.RoomRepository;
 import com.example.mainfile.dto.RoomDto;
 import com.example.mainfile.entity.RoomEntity;
@@ -21,23 +23,39 @@ import java.util.stream.Collectors;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
+    private final HotelRepository hotelRepository;
+    private final HotelMapper hotelMapper;
     public RoomDto getRoomById(Integer id) {
-        RoomEntity roomNotFound = roomRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Room with this ID not found"));
-        return roomMapper.toDto(roomNotFound);
+        RoomEntity roomEntity = roomRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
+        RoomDto roomDto = roomMapper.toDto(roomEntity);
+        // добавляем поле hotel в roomDto
+        HotelEntity hotelEntity = roomEntity.getHotel();
+        HotelDto hotelDto = hotelMapper.toDto(hotelEntity);
+        roomDto.setHotel(hotelDto);
+        return roomDto;
     }
 
+
     public List<RoomDto> getRoomsByHotelId(Integer hotelId) {
-        List<RoomEntity> rooms = roomRepository.findByHotelId(hotelId);
+        HotelEntity hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
+        List<RoomEntity> rooms = roomRepository.findByHotel(hotel);
         return roomMapper.toListDto(rooms);
     }
+
 
     public List<RoomDto> getAllRooms() {
         return roomMapper.toListDto(roomRepository.findAll());
     }
 
     public RoomDto addRoom(RoomDto room) {
-        RoomEntity save = roomRepository.save(roomMapper.toEntity(room));
-        return roomMapper.toDto(save);
+        Integer hotelId = room.getHotel().getHotelId();
+        HotelEntity hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
+        RoomEntity roomEntity = roomMapper.toEntity(room);
+        roomEntity.setHotel(hotel);
+        RoomEntity savedRoom = roomRepository.save(roomEntity);
+        return roomMapper.toDto(savedRoom);
     }
 
     public RoomDto updateRoom(Integer id, RoomDto dto) {
