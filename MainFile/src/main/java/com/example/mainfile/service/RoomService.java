@@ -29,7 +29,6 @@ public class RoomService {
         RoomEntity roomEntity = roomRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
         RoomDto roomDto = roomMapper.toDto(roomEntity);
-        // добавляем поле hotel в roomDto
         HotelEntity hotelEntity = roomEntity.getHotel();
         HotelDto hotelDto = hotelMapper.toDto(hotelEntity);
         roomDto.setHotel(hotelDto);

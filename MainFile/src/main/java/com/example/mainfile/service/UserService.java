@@ -1,7 +1,10 @@
 package com.example.mainfile.service;
 
+import com.example.mainfile.dto.RoomDto;
 import com.example.mainfile.dto.UserDto;
+import com.example.mainfile.entity.RoomEntity;
 import com.example.mainfile.entity.UserEntity;
+import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
 import lombok.Getter;
@@ -27,9 +30,13 @@ public class UserService {
         return mapper.toListDto(repository.findAll());
     }
 
-    public Optional<UserEntity> getById(UUID id) {
-        return Optional.of(repository.getReferenceById(id));
+    public Optional<UserDto> getById(UUID id) {
+        UserEntity userEntity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        UserDto userDto = mapper.toDto(userEntity);
+        return Optional.of(userDto);
     }
+
 
     public void deleteById(UUID id) {
         repository.deleteById(id);

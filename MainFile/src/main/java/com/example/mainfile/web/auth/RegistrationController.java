@@ -20,14 +20,14 @@ public class RegistrationController {
 
     @GetMapping
     public ModelAndView regPage(@ModelAttribute("newUser") UserDto user) {
-        return new ModelAndView("registration");
+        return new ModelAndView("registrationPage");
     }
 
     @PostMapping("/save")
     public ModelAndView validPage(@Valid @ModelAttribute("newUser") UserDto user,
                                   BindingResult bindingResult,
                                   @RequestParam(name = "checkPassword") String checkPass) {
-        var modelAndView = new ModelAndView("registration");
+        var modelAndView = new ModelAndView("registrationPage");
         if (!bindingResult.hasFieldErrors()) {
             if (user.getPassword().equals(checkPass)) {
                 if(service.isExistsInDb(user)){

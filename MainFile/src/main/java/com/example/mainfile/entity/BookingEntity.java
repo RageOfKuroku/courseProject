@@ -4,20 +4,35 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bookings")
+
 public class BookingEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long customerId;
-    private Long roomId;
-    private Date startDate;
-    private Date endDate;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private CustomerEntity customer;
+
+    @OneToOne
+    @JoinColumn(name="room_id")
+    private RoomEntity room;
+
+
+    private LocalDate startDate;
+
+
+    private LocalDate endDate;
     private String status;
 }
+

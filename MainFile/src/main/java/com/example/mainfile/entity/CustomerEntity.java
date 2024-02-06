@@ -18,9 +18,12 @@ public class CustomerEntity {
     private String name;
     private String email;
     private String phoneNumber;
-    @OneToMany
+
+    @OneToMany(mappedBy = "customer")
     private List<BookingEntity> bookings;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 }
+

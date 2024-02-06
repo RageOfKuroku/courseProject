@@ -28,5 +28,5 @@ public class UserDto {
     @NotBlank(message = "empty password")
     @Length(max = 15, message = "length of should be < 15")
     private String password;
-    private CustomerEntity customer;
+    private CustomerDto customer;
 }

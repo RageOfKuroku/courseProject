@@ -4,6 +4,7 @@ import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.model.CurrentUser;
 import com.example.mainfile.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,23 +25,26 @@ public class LoginController {
 
     @GetMapping
     public ModelAndView getMainPage(@ModelAttribute("newUser") UserDto dto) {
-        return new ModelAndView("login");
+        return new ModelAndView("loginPage");
     }
 
     @PostMapping("/submit")
     public ModelAndView enterData(@Valid @ModelAttribute("newUser") UserDto dto,
-                                  BindingResult result) {
+                                  BindingResult result, HttpSession session) {
         if (!result.hasFieldErrors()) {
             if (service.isExistsInDb(dto)) {
-                var model = new ModelAndView("login");
+                var model = new ModelAndView("loginPage");
                 model.addObject("notFound", false);
                 return model;
             } else {
                 Optional<UserEntity> user = service.findByPasswordAndEmail(dto);
-                CurrentUser.entity = user.get();
-                return new ModelAndView("redirect:/hotels");
+                if (user.isPresent()) {
+                    session.setAttribute("userId", user.get().getId());
+                    CurrentUser.entity = user.get();
+                    return new ModelAndView("redirect:/hotels");
+                }
             }
         }
-        return new ModelAndView("login");
+        return new ModelAndView("loginPage");
     }
 }

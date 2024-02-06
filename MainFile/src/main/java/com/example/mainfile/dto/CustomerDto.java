@@ -16,6 +16,6 @@ public class CustomerDto {
     private String name;
     private String email;
     private String phoneNumber;
-    private List<BookingEntity> bookings;
+    private List<BookingDto> bookings;
 
 }

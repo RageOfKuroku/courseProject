@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />.
 <head>
     <meta charset="UTF-8">
     <title>Страница отеля</title>
@@ -22,7 +24,21 @@
         <td th:text="${room.roomType}">Тип комнаты</td>
         <td th:text="${room.roomStatus}">Статус комнаты</td>
         <td th:text="${room.roomPrice}">Цена комнаты</td>
+        <td>
+            <form action="#" th:action="@{/hotels/bookRoom}" method="post">
+                <input type="hidden" name="roomId" th:value="${room.roomId}" />
+                <label for="startDate">Дата начала:</label>
+                <input type="date" id="startDate" name="startDate">
+                <label for="endDate">Дата окончания:</label>
+                <input type="date" id="endDate" name="endDate">
+                <input type="submit" value="Забронировать" />
+            </form>
+        </td>
     </tr>
+
+
+
+
 </table>
 </body>
 </html>

@@ -27,5 +27,9 @@ public class RoomEntity {
     @ManyToOne
     @JoinColumn(name="hotel_id", nullable=false)
     private HotelEntity hotel;
+
+    @OneToOne(mappedBy = "room")
+    private BookingEntity booking;
 }
+
 
