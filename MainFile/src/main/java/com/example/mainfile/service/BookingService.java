@@ -18,6 +18,9 @@ public class BookingService {
     private final BookingMapper bookingMapper;
 
     public BookingDto save(BookingDto booking) {
+        if (booking.getRoom() == null) {
+            throw new IllegalArgumentException("Room cannot be null for a booking");
+        }
         BookingEntity save = bookingRepository.save(bookingMapper.toEntity(booking));
         return bookingMapper.toDto(save);
     }

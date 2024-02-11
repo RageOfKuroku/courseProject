@@ -32,6 +32,6 @@ public class UserEntity {
     private Date dateOfUpdate;
     @Version
     private Integer version;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CustomerEntity customer;
 }

@@ -40,6 +40,9 @@ public class LoginController {
                 Optional<UserEntity> user = service.findByPasswordAndEmail(dto);
                 if (user.isPresent()) {
                     session.setAttribute("userId", user.get().getId());
+                    if (user.get().getCustomer() != null) {
+                        session.setAttribute("customerId", user.get().getCustomer().getCustomerId());
+                    }
                     CurrentUser.entity = user.get();
                     return new ModelAndView("redirect:/hotels");
                 }
@@ -47,4 +50,6 @@ public class LoginController {
         }
         return new ModelAndView("loginPage");
     }
+
+
 }
