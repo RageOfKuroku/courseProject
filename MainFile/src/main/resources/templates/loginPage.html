@@ -7,22 +7,17 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<form th:method="post" th:action="@{/login/submit}" th:object="${newUser}">
+<form th:method="post" th:action="@{/user/login}">
   <label>
-    <input type="email" placeholder="E-mail" name="email" th:field="*{email}">
-    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect data</p>
+    <input type="email" placeholder="E-mail" name="emailLogin">
   </label>
   <br><br>
   <label>
-    <input type="password" placeholder="Password" name="password" th:field="*{password}">
-    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect data</p>
+    <input type="password" placeholder="Password" name="password">
   </label>
   <br><br>
   <button type="submit">Submit</button>
   <a th:href="@{/registration}">Still not registered?</a>
-  <p th:if="${notFound} == false">
-    Account is not found!
-  </p>
 </form>
 <footer></footer>
 

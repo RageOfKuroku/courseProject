@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/user/login")
 public class LoginController {
     private final UserService service;
 
@@ -28,28 +28,7 @@ public class LoginController {
         return new ModelAndView("loginPage");
     }
 
-    @PostMapping("/submit")
-    public ModelAndView enterData(@Valid @ModelAttribute("newUser") UserDto dto,
-                                  BindingResult result, HttpSession session) {
-        if (!result.hasFieldErrors()) {
-            if (service.isExistsInDb(dto)) {
-                var model = new ModelAndView("loginPage");
-                model.addObject("notFound", false);
-                return model;
-            } else {
-                Optional<UserEntity> user = service.findByPasswordAndEmail(dto);
-                if (user.isPresent()) {
-                    session.setAttribute("userId", user.get().getId());
-                    if (user.get().getCustomer() != null) {
-                        session.setAttribute("customerId", user.get().getCustomer().getCustomerId());
-                    }
-                    CurrentUser.entity = user.get();
-                    return new ModelAndView("redirect:/hotels");
-                }
-            }
-        }
-        return new ModelAndView("loginPage");
-    }
+
 
 
 }

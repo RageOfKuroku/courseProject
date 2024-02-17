@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto getCustomer(Integer customerId) {
+    public CustomerDto getCustomer(UUID customerId) {
         CustomerEntity customerEntity = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 

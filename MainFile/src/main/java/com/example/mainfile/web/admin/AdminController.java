@@ -1,6 +1,7 @@
 package com.example.mainfile.web.admin;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class AdminController {
     @GetMapping("/admin")
-    public String showMainPage() {
+    public String showMainPage(Authentication authentication) {
         return "adminMainPage";
     }
 }

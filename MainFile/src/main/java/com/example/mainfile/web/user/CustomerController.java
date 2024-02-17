@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/customer")
@@ -18,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("/{customerId}")
-    public String showForm(@PathVariable Integer customerId, Model model) {
+    public String showForm(@PathVariable UUID customerId, Model model) {
         CustomerDto customerDto = customerService.getCustomer(customerId);
         model.addAttribute("customer", customerDto);
         return "customerPage";

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -13,8 +15,8 @@ import java.util.List;
 @Table(name = "customers")
 public class CustomerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID customerId;
     private String name;
     private String email;
     private String phoneNumber;

@@ -30,9 +30,9 @@ public class RegistrationController {
         var modelAndView = new ModelAndView("registrationPage");
         if (!bindingResult.hasFieldErrors()) {
             if (user.getPassword().equals(checkPass)) {
-                if(service.isExistsInDb(user)){
+                if(!service.isExistsInDb(user)){
                     service.save(userMapper.toEntity(user));
-                    return new ModelAndView("redirect:/login");
+                    return new ModelAndView("redirect:/user/login");
                 }
                 else {
                     modelAndView.addObject("isExists", true);

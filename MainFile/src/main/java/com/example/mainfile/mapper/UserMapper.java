@@ -2,8 +2,12 @@ package com.example.mainfile.mapper;
 
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -11,21 +15,31 @@ import java.util.List;
 @Mapper(
         componentModel = "spring"
 )
-public interface UserMapper {
+@Getter
+public abstract class UserMapper {
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
     @Mapping(target = "username", source = "username")
-    @Mapping(target = "password", source = "password")
+    @Mapping(target = "password", expression = "java(encodePassword(dto))")
     @Mapping(target = "email", source = "email")
-    @Mapping(target = "customer", ignore = true)
-    UserEntity toEntity(UserDto dto);
+    @Mapping(target = "role", defaultValue = "USER")
+    public abstract UserEntity toEntity(UserDto dto);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "username", source = "username")
     @Mapping(target = "password", source = "password")
     @Mapping(target = "email", source = "email")
-    @Mapping(target = "customer", ignore = true)
-    UserDto toDto(UserEntity entity);
+    @Mapping(target = "role", source = "role")
+    public abstract UserDto toDto(UserEntity entity);
 
-    List<UserEntity> toListEntity(List<UserDto> dtos);
+    public abstract List<UserEntity> toListEntity(List<UserDto> dtos);
 
-    List<UserDto> toListDto(List<UserEntity> entities);
+    public abstract List<UserDto> toListDto(List<UserEntity> entities);
+
+    public String encodePassword(UserDto dto) {
+        return encoder.encode(dto.getPassword());
+    }
+
+
 }

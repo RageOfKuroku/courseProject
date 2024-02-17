@@ -11,10 +11,12 @@ public interface CustomerMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "phoneNumber", source = "phoneNumber")
+    @Mapping(target = "user", source = "user")
     CustomerEntity toEntity(CustomerDto dto);
     @Mapping(target = "customerId", source = "customerId")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "phoneNumber", source = "phoneNumber")
+    @Mapping(target = "user", source = "user")
     CustomerDto toDto(CustomerEntity entity);
 }
