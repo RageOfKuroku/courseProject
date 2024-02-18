@@ -4,7 +4,8 @@ import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.model.CurrentUser;
 import com.example.mainfile.service.UserService;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,6 @@ public class LoginController {
     public ModelAndView getMainPage(@ModelAttribute("newUser") UserDto dto) {
         return new ModelAndView("loginPage");
     }
-
-
 
 
 }

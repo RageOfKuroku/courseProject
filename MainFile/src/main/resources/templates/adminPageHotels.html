@@ -2,14 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Страница администратора</title>
-  <!-- Подключение Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />.
-
 </head>
 <body>
-<div class="container">
-  <h1>Добавить отель</h1>
+<div class="container py-5">
+  <h1 class="mb-4">Добавить отель</h1>
   <form th:action="@{/admin/hotels/addHotel}" th:object="${hotel}" method="post">
     <div class="form-group">
       <label for="name">Название</label>
@@ -23,9 +20,9 @@
       <label for="rating">Рейтинг</label>
       <input type="number" th:field="*{rating}" class="form-control" id="rating" placeholder="Введите рейтинг отеля">
     </div>
-    <button type="submit" class="btn btn-primary">Добавить</button>
+    <button type="submit" class="btn btn-primary mt-3">Добавить</button>
   </form>
-  <h2>Список отелей</h2>
+  <h2 class="my-4">Список отелей</h2>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -44,15 +41,10 @@
       <td th:text="${hotel.rating}"></td>
       <td>
         <form th:action="@{/admin/hotels/delete/{id}(id=${hotel.hotelId})}" th:method="post">
-          <input type="submit" value="Удалить" />
+          <button type="submit" class="btn btn-danger mb-1">Удалить</button>
         </form>
-      </td>
-      <td>
-        <form class="d-flex" th:action="@{/admin/hotels/rooms/{id}(id=${hotel.hotelId})}" method="get">
-          <button class="btn btn-outline-dark" type="submit">
-            <i class="bi-cart-fill me-1"></i>
-            Просмотреть
-          </button>
+        <form th:action="@{/admin/hotels/rooms/{id}(id=${hotel.hotelId})}" method="get">
+          <button type="submit" class="btn btn-outline-dark">Просмотреть</button>
         </form>
       </td>
     </tr>

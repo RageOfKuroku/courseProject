@@ -2,13 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Список комнат для отеля</title>
-    <!-- Подключение Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-<div class="container">
-    <h1>Список комнат для отеля</h1>
+<div class="container py-5">
+    <h1 class="mb-4">Список комнат для отеля</h1>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -27,13 +25,13 @@
             <td th:text="${room.roomPrice}"></td>
             <td>
                 <form th:action="@{/admin/hotels/rooms/delete/{id}(id=${room.roomId})}" th:method="post">
-                    <input type="submit" value="Удалить" />
+                    <button type="submit" class="btn btn-danger mb-1">Удалить</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
-    <h2>Добавить комнату</h2>
+    <h2 class="my-4">Добавить комнату</h2>
     <form method="post" th:action="@{/admin/hotels/rooms/add/__${hotelId}__}" th:object="${room}">
         <div class="form-group">
             <label for="name">Тип комнаты</label>
@@ -56,7 +54,7 @@
             <input type="number" th:field="*{roomPrice}" class="form-control" id="rating"
                    placeholder="Введите цену комнаты">
         </div>
-        <button type="submit" class="btn btn-primary">Добавить</button>
+        <button type="submit" class="btn btn-primary mt-3">Добавить</button>
     </form>
 </div>
 </body>

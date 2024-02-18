@@ -6,7 +6,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/css/bootstrap.min.css">
 </head>
 <body>
-<a class="btn btn-primary" th:href="@{/admin/hotels/addHotel}">Список отелей</a>
-<a class="btn btn-danger" th:href="@{/users}">Список пользователей</a>
+<div class="container py-5">
+  <h1 class="mb-4">Страница администратора</h1>
+  <div class="d-flex flex-column align-items-start">
+    <a class="btn btn-primary mb-3" th:href="@{/admin/hotels/addHotel}">Список отелей</a>
+    <a class="btn btn-danger" th:href="@{/users}">Список пользователей</a>
+  </div>
+</div>
 </body>
 </html>

@@ -20,14 +20,12 @@ public abstract class UserMapper {
     @Autowired
     BCryptPasswordEncoder encoder;
 
-    @Mapping(target = "username", source = "username")
     @Mapping(target = "password", expression = "java(encodePassword(dto))")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", defaultValue = "USER")
     public abstract UserEntity toEntity(UserDto dto);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "username", source = "username")
     @Mapping(target = "password", source = "password")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", source = "role")
@@ -40,6 +38,5 @@ public abstract class UserMapper {
     public String encodePassword(UserDto dto) {
         return encoder.encode(dto.getPassword());
     }
-
-
 }
+

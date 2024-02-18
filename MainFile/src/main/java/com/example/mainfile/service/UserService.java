@@ -1,8 +1,11 @@
 package com.example.mainfile.service;
 
+import com.example.mainfile.dto.BookingDto;
 import com.example.mainfile.dto.UserDto;
+import com.example.mainfile.entity.BookingEntity;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
+import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
 import lombok.Getter;
@@ -10,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +23,30 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Getter
-@Repository
+@Service
 public class UserService implements UserDetailsService {
+
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final BookingMapper bookingMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public void save(UserEntity user) {
-        repository.save(user);
+    public void save(UserDto userDto) {
+        UserEntity entity = mapper.toEntity(userDto);
+        repository.save(entity);
     }
+
+    public void update(UserDto userDto) {
+        UserEntity userEntity = repository.findById(userDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userDto.getId() + " not found"));
+
+        userEntity.setName(userDto.getName());
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPhoneNumber(userDto.getPhoneNumber());
+
+        repository.save(userEntity);
+    }
+
 
     public List<UserDto> findAll() {
         return mapper.toListDto(repository.findAll());
@@ -38,7 +59,6 @@ public class UserService implements UserDetailsService {
         return Optional.of(userDto);
     }
 
-
     public void deleteById(UUID id) {
         repository.deleteById(id);
     }
@@ -49,7 +69,7 @@ public class UserService implements UserDetailsService {
                 .isPresent();
     }
 
-    public Optional<UserEntity> findByPasswordAndEmail(UserDto dto){
+    public Optional<UserEntity> findByPasswordAndEmail(UserDto dto) {
         return repository.findByPasswordAndEmail(dto.getPassword(), dto.getEmail());
     }
 
@@ -58,11 +78,23 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with email " + email + " not found"));
         return mapper.toDto(userEntity);
     }
-
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByEmail(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return repository.findByEmail(email)
                 .orElseThrow(RuntimeException::new);
     }
+
+    public List<BookingDto> getBookings(UUID userId) {
+        UserEntity userEntity = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found"));
+
+        List<BookingEntity> bookingEntities = userEntity.getBookings();
+
+        List<BookingDto> bookingDtos = bookingMapper.toListDto(bookingEntities);
+
+        return bookingDtos;
+    }
+
+
+
 }

@@ -5,43 +5,43 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Отели</h1>
-    <form th:action="@{/hotels}" th:object="${hotel}" method="post">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Название</th>
-                <th scope="col">Адрес</th>
-                <th scope="col">Рейтинг</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr th:each="hotel : ${hotels}">
-                <th scope="row" th:text="${hotel.hotelId}"></th>
-                <td th:text="${hotel.name}"></td>
-                <td th:text="${hotel.address}"></td>
-                <td th:text="${hotel.rating}"></td>
-
-                <td>
-                    <form class="d-flex">
-                        <button type="submit" class="btn btn-outline-dark">
-                            <i class="bi-cart-fill me-1"></i>
-                            Просмотреть
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-    <form th:action="@{/customer/(customerId=${customer.customerId})}" method="get">
-        <button type="submit" class="btn btn-primary">Перейти к странице клиента</button>
-    </form>
-
-
+<div class="container py-5">
+    <h1 class="mb-5">Отели</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Рейтинг</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hotel : ${hotels}">
+            <th scope="row" th:text="${hotel.hotelId}"></th>
+            <td th:text="${hotel.name}"></td>
+            <td th:text="${hotel.address}"></td>
+            <td th:text="${hotel.rating}"></td>
+            <td>
+                <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="bi-cart-fill me-1"></i>
+                        Просмотреть
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${user != null}">
+        <form th:action="@{/user/{userId}(userId=${user.id})}" th:method="get" class="mt-5">
+            <button type="submit" class="btn btn-primary">Перейти к странице пользователя</button>
+        </form>
+    </div>
+    <div th:if="${user == null}">
+        <a href="/user/login" class="btn btn-primary">Войти</a>
+    </div>
 
 </div>
 </body>

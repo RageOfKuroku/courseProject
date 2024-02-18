@@ -14,24 +14,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bookings")
-
 public class BookingEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="customer_id")
-    private CustomerEntity customer;
+    @JoinColumn(name="user_id")
+    private UserEntity user;
 
     @OneToOne
     @JoinColumn(name="room_id")
     private RoomEntity room;
 
-
     private LocalDate startDate;
-
-
     private LocalDate endDate;
     private String status;
 }

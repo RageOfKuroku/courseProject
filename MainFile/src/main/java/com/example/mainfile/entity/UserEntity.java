@@ -24,7 +24,6 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String username;
     private String email;
     private String password;
     @CreationTimestamp
@@ -33,10 +32,13 @@ public class UserEntity implements UserDetails {
     private Date dateOfUpdate;
     @Version
     private Integer version;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private CustomerEntity customer;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private String name;
+    private String phoneNumber;
+    @OneToMany(mappedBy = "user")
+    private List<BookingEntity> bookings;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

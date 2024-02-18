@@ -1,7 +1,6 @@
 package com.example.mainfile.web.auth;
 
 import com.example.mainfile.dto.UserDto;
-import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegistrationController {
 
     private final UserService service;
-    private final UserMapper userMapper;
 
     @GetMapping
     public ModelAndView regPage(@ModelAttribute("newUser") UserDto user) {
@@ -31,7 +29,7 @@ public class RegistrationController {
         if (!bindingResult.hasFieldErrors()) {
             if (user.getPassword().equals(checkPass)) {
                 if(!service.isExistsInDb(user)){
-                    service.save(userMapper.toEntity(user));
+                    service.save(user);
                     return new ModelAndView("redirect:/user/login");
                 }
                 else {
@@ -46,6 +44,9 @@ public class RegistrationController {
         return modelAndView;
     }
 
-
-
 }
+
+
+
+
+
