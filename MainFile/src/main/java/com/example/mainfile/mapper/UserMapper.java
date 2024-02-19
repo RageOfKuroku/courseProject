@@ -23,13 +23,18 @@ public abstract class UserMapper {
     @Mapping(target = "password", expression = "java(encodePassword(dto))")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", defaultValue = "USER")
+    @Mapping(target = "version", source = "version")
+    @Mapping(target = "bookings", ignore = true)
     public abstract UserEntity toEntity(UserDto dto);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "password", source = "password")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", source = "role")
+    @Mapping(target = "version", source = "version")
+    @Mapping(target = "bookings", ignore = true)
     public abstract UserDto toDto(UserEntity entity);
+
 
     public abstract List<UserEntity> toListEntity(List<UserDto> dtos);
 

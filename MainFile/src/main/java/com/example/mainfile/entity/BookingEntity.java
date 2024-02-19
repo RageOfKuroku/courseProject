@@ -29,6 +29,5 @@ public class BookingEntity {
 
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
 }
 

@@ -17,7 +17,6 @@ public class BookingDto {
     private RoomDto room;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
 }
 
 

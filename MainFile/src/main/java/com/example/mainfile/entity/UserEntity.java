@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     private Date dateOfUpdate;
     @Version
-    private Integer version;
+    private Integer version = 0;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String name;

@@ -17,9 +17,9 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roomId;
     private Double roomPrice;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private RoomType roomType;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private RoomStatus roomStatus;
     @ElementCollection
     private List<String> additions;
@@ -28,7 +28,7 @@ public class RoomEntity {
     @JoinColumn(name="hotel_id", nullable=false)
     private HotelEntity hotel;
 
-    @OneToOne(mappedBy = "room")
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BookingEntity booking;
 }
 

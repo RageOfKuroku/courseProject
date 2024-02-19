@@ -65,21 +65,20 @@ public class HotelController {
     @PostMapping("/bookRoom")
     public String bookRoom(@RequestParam Integer roomId, @ModelAttribute BookingDto bookingDto, @AuthenticationPrincipal UserEntity userEntity) {
         if (userEntity != null) {
-            RoomDto room = roomService.getRoomById(roomId);
             Optional<UserDto> optionalUser = userService.getById(userEntity.getId());
 
-            if (optionalUser.isPresent() && room != null && room.getRoomStatus() == RoomStatus.AVAILABLE) {
+            if (optionalUser.isPresent()) {
                 UserDto user = optionalUser.get();
-
                 bookingDto.setUser(user);
-                bookingDto.setRoom(room);
 
-                bookingService.save(bookingDto);
-
-                room.setRoomStatus(RoomStatus.BOOKED);
-                roomService.updateRoom(room.getRoomId(), room);
+                
+                bookingService.saveBooking(roomId, bookingDto, user.getId());
             }
         }
+
         return "redirect:/hotels";
     }
+
+
+
 }

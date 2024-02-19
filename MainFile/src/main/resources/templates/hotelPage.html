@@ -30,17 +30,18 @@
             <td>
                 <form th:action="@{/hotels/bookRoom}" method="post">
                     <input type="hidden" name="roomId" th:value="${room.roomId}" />
-                    <div class="form-group">
+                    <div class="form-group" th:if="${room.roomStatus != 'BOOKED'}">
                         <label for="startDate">Дата начала:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control">
+                        <input type="date" id="startDate" name="startDate" class="form-control" required>
                     </div>
-                    <div class="form-group">
-                        <label for="endDate">Дата окончания:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control">
+                    <div class="form-group" th:if="${room.roomStatus != 'BOOKED'}" >
+                        <label for="endDate" >Дата окончания:</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Забронировать</button>
+                    <button type="submit" class="btn btn-primary" th:if="${room.roomStatus != 'BOOKED'}">Забронировать</button>
                 </form>
             </td>
+
         </tr>
         </tbody>
     </table>

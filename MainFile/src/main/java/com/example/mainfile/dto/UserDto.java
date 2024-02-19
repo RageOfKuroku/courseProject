@@ -29,4 +29,6 @@ public class UserDto {
     private String name;
     private String phoneNumber;
     private List<BookingDto> bookings;
+    private Integer version;
 }
+
