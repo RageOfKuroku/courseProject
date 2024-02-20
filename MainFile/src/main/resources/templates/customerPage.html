@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Customer Page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -29,13 +29,13 @@
     <tr>
       <th>Booking</th>
       <th>Date</th>
-      <th>Details</th>
+      <th>Date</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="booking : ${bookings}">
-      <td th:text="${booking.date}"></td>
-      <td th:text="${booking.details}"></td>
+      <td th:text="${booking.startDate.toString()}"></td>
+      <td th:text="${booking.endDate.toString()}"></td>
     </tr>
     </tbody>
   </table>

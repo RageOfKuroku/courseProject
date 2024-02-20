@@ -8,6 +8,7 @@ import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

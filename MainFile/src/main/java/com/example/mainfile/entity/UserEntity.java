@@ -36,7 +36,7 @@ public class UserEntity implements UserDetails {
     private Role role;
     private String name;
     private String phoneNumber;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<BookingEntity> bookings;
 
 

@@ -1,6 +1,7 @@
 package com.example.mainfile.service;
 
 import com.example.mainfile.entity.UserEntity;
+import com.example.mainfile.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -18,6 +19,7 @@ import javax.crypto.SecretKey;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +44,9 @@ public class TokenService {
         return Jwts.builder().subject(user.getEmail())
                 .claim("username", user.getEmail())
                 .claim("roles", roles)
+                .claim("name", user.getName())
+                .claim("id", String.valueOf(user.getId()))
+                .claim("phoneNumber", user.getPhoneNumber())
                 .signWith(secretKey)
                 .compact();
     }
@@ -52,13 +57,24 @@ public class TokenService {
 
         Claims payload = (Claims) parser.parse(token).getPayload();
 
-        var username = payload.get("username");
-        String roles = (String)payload.get("roles");
+        String username = (String) payload.get("username");
+        String name = (String) payload.get("name");
+        UUID id = UUID.fromString((String) payload.get("id"));
+        String phoneNumber = (String) payload.get("phoneNumber");
+        String roles = (String) payload.get("roles");
+
+        UserEntity build = UserEntity.builder()
+                .id(id)
+                .name(name)
+                .email(username)
+                .phoneNumber(phoneNumber)
+                .role(Role.valueOf(roles))
+                .build();
 
         List<SimpleGrantedAuthority> list = Arrays.stream(roles.split(","))
                 .map(SimpleGrantedAuthority::new)
                 .toList();
 
-        return new UsernamePasswordAuthenticationToken(username, null, list);
+        return new UsernamePasswordAuthenticationToken(build, null, list);
     }
 }

@@ -50,7 +50,6 @@ public class BookingService {
             room.setRoomStatus(RoomStatus.BOOKED);
             roomService.updateRoom(room.getRoomId(), room);
         } else {
-            // Handle the case where the room is not available
             System.out.println("Room is not available for booking");
         }
     }
