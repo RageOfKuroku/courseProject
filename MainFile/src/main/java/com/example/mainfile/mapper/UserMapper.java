@@ -3,7 +3,6 @@ package com.example.mainfile.mapper;
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/user/login")
+@RequestMapping("/auth/login")
 public class LoginController {
     private final UserService service;
 

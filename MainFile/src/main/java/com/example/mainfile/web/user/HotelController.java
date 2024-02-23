@@ -2,11 +2,9 @@ package com.example.mainfile.web.user;
 
 import com.example.mainfile.dto.*;
 import com.example.mainfile.entity.UserEntity;
-import com.example.mainfile.model.RoomStatus;
 import com.example.mainfile.service.*;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +27,7 @@ public class HotelController {
 
 
     @GetMapping
-    public String showHotelForm(Model model, @AuthenticationPrincipal UserEntity userEntity, Authentication authentication) {
+    public String showHotelForm(Model model, @AuthenticationPrincipal UserEntity userEntity) {
         model.addAttribute("hotel", new HotelDto());
         model.addAttribute("hotels", service.getAllHotels());
 

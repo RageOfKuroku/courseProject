@@ -21,7 +21,7 @@ public class AdminHotelController {
     public String showAddHotelForm(Model model) {
         model.addAttribute("hotel", new HotelDto());
         model.addAttribute("hotels", service.getAllHotels());
-        return "adminPageHotels";
+        return "adminHotelPage";
     }
 
     @GetMapping

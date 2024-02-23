@@ -23,9 +23,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{userId}")
-    public String showForm(@PathVariable UUID userId, Model model, @AuthenticationPrincipal UserEntity user) {
-        Optional<UserDto> optionalUserDto = userService.getById(userId);
+    @GetMapping("/profile")
+    public String showForm(Model model, @AuthenticationPrincipal UserEntity user) {
+        Optional<UserDto> optionalUserDto = userService.getById(user.getId());
         if (optionalUserDto.isPresent()) {
             UserDto userDto = optionalUserDto.get();
             model.addAttribute("bookings", user.getBookings());
@@ -35,12 +35,12 @@ public class UserController {
     }
 
 
-    @PostMapping("/{userId}/updateUser")
-    public String updateUser(@PathVariable UUID userId, @ModelAttribute("user") UserDto userDto) {
-        if (userId != null) {
-            userDto.setId(userId);
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute("user") UserDto userDto, @AuthenticationPrincipal UserEntity user) {
+        if (user.getId() != null) {
+            userDto.setId(user.getId());
             userService.update(userDto);
-            return "redirect:/user/" + userDto.getId();
+            return "redirect:/user/profile";
         } else {
             throw new ResourceNotFoundException("User with this id does not exist");
         }

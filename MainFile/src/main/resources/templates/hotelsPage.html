@@ -35,12 +35,12 @@
         </tbody>
     </table>
     <div th:if="${user != null}">
-        <form th:action="@{/user/{userId}(userId=${user.id})}" th:method="get" class="mt-5">
+        <form th:action="@{/user/profile}" th:method="get" class="mt-5">
             <button type="submit" class="btn btn-primary">Перейти к странице пользователя</button>
         </form>
     </div>
     <div th:if="${user == null}">
-        <a href="/user/login" class="btn btn-primary">Войти</a>
+        <a href="/auth/login" class="btn btn-primary">Войти</a>
     </div>
 
 </div>

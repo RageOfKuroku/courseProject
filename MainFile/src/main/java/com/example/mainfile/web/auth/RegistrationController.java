@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/auth/registration")
 @RequiredArgsConstructor
 public class RegistrationController {
 
@@ -30,7 +30,7 @@ public class RegistrationController {
             if (user.getPassword().equals(checkPass)) {
                 if(!service.isExistsInDb(user)){
                     service.save(user);
-                    return new ModelAndView("redirect:/user/login");
+                    return new ModelAndView("redirect:/auth/login");
                 }
                 else {
                     modelAndView.addObject("isExists", true);

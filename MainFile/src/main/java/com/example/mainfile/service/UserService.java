@@ -8,14 +8,12 @@ import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,11 +77,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with email " + email + " not found"));
         return mapper.toDto(userEntity);
     }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return repository.findByEmail(email)
                 .orElseThrow(RuntimeException::new);
     }
+
 
     public List<BookingDto> getBookings(UUID userId) {
         UserEntity userEntity = repository.findById(userId)
@@ -91,11 +91,8 @@ public class UserService implements UserDetailsService {
 
         List<BookingEntity> bookingEntities = userEntity.getBookings();
 
-        List<BookingDto> bookingDtos = bookingMapper.toListDto(bookingEntities);
-
-        return bookingDtos;
+        return bookingMapper.toListDto(bookingEntities);
     }
-
 
 
 }

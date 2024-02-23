@@ -1,7 +1,5 @@
 package com.example.mainfile.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +9,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ import java.util.UUID;
 @Table(name = "bookings")
 public class BookingEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
@@ -30,7 +29,7 @@ public class BookingEntity {
     private UserEntity user;
 
     @OneToOne
-    @JoinColumn(name="room_id")
+    @JoinColumn(name = "room_id")
     @ToString.Exclude
     private RoomEntity room;
 
