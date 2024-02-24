@@ -1,6 +1,7 @@
 package com.example.mainfile.entity;
 
 import com.example.mainfile.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,9 +37,6 @@ public class UserEntity implements UserDetails {
     private Role role;
     private String name;
     private String phoneNumber;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<BookingEntity> bookings;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

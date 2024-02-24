@@ -1,6 +1,7 @@
 package com.example.mainfile.repository;
 
 import com.example.mainfile.entity.HotelEntity;
+import com.example.mainfile.entity.RoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

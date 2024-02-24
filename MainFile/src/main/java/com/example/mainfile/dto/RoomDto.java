@@ -21,6 +21,5 @@ public class RoomDto {
     private RoomStatus roomStatus;
     private List<String> additions;
     private String description;
-
     private HotelDto hotel;
 }

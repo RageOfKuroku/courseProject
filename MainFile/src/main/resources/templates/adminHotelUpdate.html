@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Обновить данные отеля</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container py-5">
+  <h2 class="my-4">Обновить данные отеля</h2>
+  <form th:action="@{/admin/hotels/update/{id}(id=${hotel.hotelId})}" th:method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="hotelName">Название отеля</label>
+      <input type="text" th:field="*{hotel.name}" class="form-control" id="hotelName" placeholder="Введите название отеля">
+    </div>
+    <div class="form-group">
+      <label for="hotelAddress">Адрес отеля</label>
+      <input type="text" th:field="*{hotel.address}" class="form-control" id="hotelAddress" placeholder="Введите адрес отеля">
+    </div>
+    <div class="form-group">
+      <label for="hotelRating">Рейтинг отеля</label>
+      <input type="number" th:field="*{hotel.rating}" class="form-control" id="hotelRating" placeholder="Введите рейтинг отеля">
+    </div>
+    <div class="form-group">
+      <label>Фото отеля</label><br>
+      <input type="file" name="file" placeholder="Выберите Фото">
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Обновить</button>
+  </form>
+</div>
+</body>
+</html>

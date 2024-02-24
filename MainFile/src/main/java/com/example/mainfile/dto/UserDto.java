@@ -1,6 +1,7 @@
 package com.example.mainfile.dto;
 
 import com.example.mainfile.model.Role;
+import com.example.mainfile.service.BookingService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +19,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class UserDto {
+
+    BookingService bookingService;
+
+
+
     private UUID id;
     @Email(message = "wrong email")
     @NotBlank(message = "empty email")

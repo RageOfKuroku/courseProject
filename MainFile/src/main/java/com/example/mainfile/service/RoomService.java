@@ -3,6 +3,7 @@ package com.example.mainfile.service;
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
+import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.mapper.HotelMapper;
 import com.example.mainfile.repository.HotelRepository;
 import com.example.mainfile.repository.RoomRepository;
@@ -25,15 +26,17 @@ public class RoomService {
     private final RoomMapper roomMapper;
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
+    private final BookingMapper bookingMapper;
     public RoomDto getRoomById(Integer id) {
         RoomEntity roomEntity = roomRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
         RoomDto roomDto = roomMapper.toDto(roomEntity);
-        HotelEntity hotelEntity = roomEntity.getHotel();
-        HotelDto hotelDto = hotelMapper.toDto(hotelEntity);
+
+        HotelDto hotelDto = hotelMapper.toDto(roomEntity.getHotel());
         roomDto.setHotel(hotelDto);
         return roomDto;
     }
+
 
 
     public List<RoomDto> getRoomsByHotelId(Integer hotelId) {
@@ -56,6 +59,7 @@ public class RoomService {
         RoomEntity savedRoom = roomRepository.save(roomEntity);
         return roomMapper.toDto(savedRoom);
     }
+
 
     public RoomDto updateRoom(Integer id, RoomDto dto) {
         if(id != null){

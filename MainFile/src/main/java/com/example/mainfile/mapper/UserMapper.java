@@ -23,7 +23,6 @@ public abstract class UserMapper {
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", defaultValue = "USER")
     @Mapping(target = "version", source = "version")
-    @Mapping(target = "bookings", ignore = true)
     public abstract UserEntity toEntity(UserDto dto);
 
     @Mapping(target = "id", source = "id")
@@ -31,7 +30,6 @@ public abstract class UserMapper {
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", source = "role")
     @Mapping(target = "version", source = "version")
-    @Mapping(target = "bookings", ignore = true)
     public abstract UserDto toDto(UserEntity entity);
 
 

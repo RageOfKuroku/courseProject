@@ -6,14 +6,18 @@ import com.example.mainfile.dto.RoomDto;
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.BookingEntity;
 import com.example.mainfile.entity.HotelEntity;
+import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.model.RoomStatus;
 import com.example.mainfile.repository.BookingRepository;
+import com.example.mainfile.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,10 +30,11 @@ public class BookingService {
     private final BookingMapper bookingMapper;
     private final RoomService roomService;
     private final UserService userService;
+    
 
     public BookingDto save(BookingDto booking) {
         if (booking.getRoom() == null) {
-            throw new IllegalArgumentException("Room cannot be null for a booking");
+            throw new IllegalArgumentException("RoomId cannot be null for a booking");
         }
         BookingEntity save = bookingRepository.saveAndFlush(bookingMapper.toEntity(booking));
         return bookingMapper.toDto(save);
@@ -54,6 +59,15 @@ public class BookingService {
         }
     }
 
+    public List<BookingDto> getBookingsForUser(UUID userId) {
+        List<BookingEntity> bookings = bookingRepository.findAllByUserId(userId);
+        return bookingMapper.toListDto(bookings);
+    }
+
 
 }
+
+
+
+
 

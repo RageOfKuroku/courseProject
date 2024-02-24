@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Страница пользователей</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container py-5">
+  <h1 class="text-center mb-4">Список пользователей</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Email</th>
+      <th scope="col">Роль</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user, stat : ${users}">
+      <td th:text="${stat.count}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.role}"></td>
+      <td>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" th:attr="data-target='#bookings'+${user.id}" aria-expanded="false" aria-controls="collapseExample">
+          <span class="arrow">►</span>
+        </button>
+        <div class="collapse" th:id="'bookings'+${user.id}">
+          <div class="card card-body">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Дата начала бронирования</th>
+                <th scope="col">Дата окончания бронирования</th>
+                <th scope="col">Отель</th>
+                <th scope="col">Тип комнаты</th>
+                <th scope="col">Стоимость бронирования</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="booking, stat : ${user.bookings}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${booking.startDate}"></td>
+                <td th:text="${booking.endDate}"></td>
+                <td th:text="${booking.room.hotel.name}"></td>
+                <td th:text="${booking.room.roomType}"></td>
+                <td th:text="${booking.room.roomPrice}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </td>
+      <td>
+        <form th:action="@{'/admin/users/' + ${user.id}}" method="post">
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="collapse"]').on('click', function() {
+      let arrow = $(this).find('.arrow');
+      if (arrow.text() === '▶') {
+        arrow.text('▼');
+      } else {
+        arrow.text('▶');
+      }
+    });
+  });
+</script>
+</body>
+</html>

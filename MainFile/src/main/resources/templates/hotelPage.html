@@ -3,15 +3,43 @@
 <head>
     <title>Страница отеля</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .hotel-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        .hotel-details {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .hotel-details h1, p {
+            margin: 0;
+        }
+        .room-table th, .room-table td {
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="my-4" th:text="${hotel.name}">Название отеля</h1>
-    <p th:text="${hotel.address}">Адрес отеля</p>
-    <p th:text="${hotel.rating}">Рейтинг отеля</p>
-    <img class="img-fluid" th:src="${hotel.imageToShow}" alt="Фото отеля">
-    <h2 class="my-4">Список комнат</h2>
-    <table class="table table-striped">
+<div class="container py-5">
+    <div class="hotel-details">
+        <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
+        <div>
+            <h1 th:text="${hotel.name}" class="display-4"></h1>
+            <p th:text="${hotel.address}" class="lead"></p>
+            <p th:text="${hotel.rating}" class="lead"></p>
+        </div>
+    </div>
+    <h2 class="my-4 display-5">Список комнат</h2>
+    <table class="table table-hover room-table">
         <thead>
         <tr>
             <th>Номер</th>
@@ -23,10 +51,10 @@
         </thead>
         <tbody>
         <tr th:each="room : ${rooms}">
-            <td th:text="${room.roomId}">Номер комнаты</td>
-            <td th:text="${room.roomType}">Тип комнаты</td>
-            <td th:text="${room.roomStatus}">Статус комнаты</td>
-            <td th:text="${room.roomPrice}">Цена комнаты</td>
+            <td th:text="${room.roomId}"></td>
+            <td th:text="${room.roomType}"></td>
+            <td th:text="${room.roomStatus}"></td>
+            <td th:text="${room.roomPrice}"></td>
             <td>
                 <form th:action="@{/hotels/bookRoom}" method="post">
                     <input type="hidden" name="roomId" th:value="${room.roomId}" />
@@ -41,10 +69,10 @@
                     <button type="submit" class="btn btn-primary" th:if="${room.roomStatus != room.roomStatus.BOOKED}">Забронировать</button>
                 </form>
             </td>
-
         </tr>
         </tbody>
     </table>
+    <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a> <!-- Добавил кнопку Возврата к отелям -->
 </div>
 </body>
 </html>

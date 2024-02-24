@@ -34,12 +34,16 @@ public class HotelService {
 
     public HotelDto updateHotel(Integer id, HotelDto dto) {
         if(id != null){
-            hotelMapper.update(hotelRepository.getReferenceById(id), dto);
+            HotelEntity hotelEntity = hotelRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
+            hotelMapper.update(hotelEntity, dto);
+            hotelRepository.save(hotelEntity);
             return dto;
         }else {
             throw new ResourceNotFoundException("Hotel with this ID not found");
         }
     }
+
     @Transactional
     public void deleteHotel(Integer id) {
         if(id != null) {

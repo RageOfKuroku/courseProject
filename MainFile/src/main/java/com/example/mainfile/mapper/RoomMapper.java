@@ -16,7 +16,6 @@ public interface RoomMapper {
     @Mapping(target = "roomStatus",source = "roomStatus")
     @Mapping(target = "additions",source = "additions")
     @Mapping(target = "description",source = "description")
-    @Mapping(target = "hotel", ignore = true)
     RoomEntity toEntity(RoomDto dto);
 
     @Mapping(target = "roomId",source = "roomId")
@@ -25,7 +24,6 @@ public interface RoomMapper {
     @Mapping(target = "roomStatus",source = "roomStatus")
     @Mapping(target = "additions",source = "additions")
     @Mapping(target = "description",source = "description")
-    @Mapping(target = "hotel", ignore = true)
     RoomDto toDto(RoomEntity entity);
 
 

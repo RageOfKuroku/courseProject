@@ -4,6 +4,7 @@ import com.example.mainfile.dto.BookingDto;
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
+import com.example.mainfile.service.BookingService;
 import com.example.mainfile.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,13 +23,14 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final BookingService bookingService;
 
     @GetMapping("/profile")
     public String showForm(Model model, @AuthenticationPrincipal UserEntity user) {
         Optional<UserDto> optionalUserDto = userService.getById(user.getId());
         if (optionalUserDto.isPresent()) {
             UserDto userDto = optionalUserDto.get();
-            model.addAttribute("bookings", user.getBookings());
+            model.addAttribute("bookings", bookingService.getBookingsForUser(user.getId()));
             model.addAttribute("user", userDto);
         }
         return "customerPage";

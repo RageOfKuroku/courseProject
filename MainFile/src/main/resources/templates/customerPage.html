@@ -3,11 +3,55 @@
 <head>
   <title>Customer Page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #212529;
+    }
+    .btn-primary {
+      color: #fff;
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+    .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 960px;
+    }
+    .hotel-card {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-width: 300px;
+    }
+    .hotel-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .hotels-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1 class="my-4">Customer Details</h1>
-  <form th:action="@{/user/update}" th:object="${user}" th:method="post">
+<div class="container py-5">
+  <h1 class="mb-4 text-center">Customer Details</h1>
+  <form th:action="@{/user/update}" th:object="${user}" th:method="post" class="mb-5">
     <div class="form-group">
       <label for="name">Name:</label>
       <input type="text" id="name" th:field="*{name}" class="form-control" required>
@@ -23,22 +67,19 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <h2 class="my-4">Bookings</h2>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Booking</th>
-      <th>Date</th>
-      <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="booking : ${bookings}">
-      <td th:text="${booking.startDate.toString()}"></td>
-      <td th:text="${booking.endDate.toString()}"></td>
-    </tr>
-    </tbody>
-  </table>
+  <h2 class="my-4 text-center">Bookings</h2>
+  <div class="hotels-container">
+    <div th:each="booking, stat : ${bookings}" class="hotel-card">
+      <img th:src="@{'data:image/png;base64,'+${booking.room.hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
+      <div>
+        <h2 th:text="${booking.room.getHotel().name}"></h2>
+        <p th:text="${booking.startDate.toString()}"></p>
+        <p th:text="${booking.endDate.toString()}"></p>
+        <p th:text="${booking.room.roomType}"></p>
+        <p th:text="${booking.room.roomPrice}"></p>
+      </div>
+    </div>
+  </div>
   <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>
 </div>
 </body>

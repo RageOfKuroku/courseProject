@@ -30,6 +30,8 @@ public class RoomEntity {
 
     @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BookingEntity booking;
+
+
 }
 
 

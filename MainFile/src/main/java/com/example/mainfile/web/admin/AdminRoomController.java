@@ -25,10 +25,8 @@ public class AdminRoomController {
         HotelDto hotel = hotelService.getHotelById(id);
         RoomDto room = RoomDto.builder().hotel(hotel).build();
         model.addAttribute("room", room);
-
         List<RoomDto> rooms = service.getRoomsByHotelId(id);
-        model.addAttribute("rooms", rooms);
-
+        model.addAttribute("hotelRooms", rooms);
         model.addAttribute("hotelId", hotel.getHotelId());
         return "adminPageRooms";
     }

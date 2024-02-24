@@ -85,14 +85,5 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public List<BookingDto> getBookings(UUID userId) {
-        UserEntity userEntity = repository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found"));
-
-        List<BookingEntity> bookingEntities = userEntity.getBookings();
-
-        return bookingMapper.toListDto(bookingEntities);
-    }
-
 
 }

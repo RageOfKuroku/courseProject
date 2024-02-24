@@ -17,7 +17,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class BookingMapper {
 
-
     @Mapping(target = "id", source = "id")
     @Mapping(target = "user", source = "user")
     @Mapping(target = "room", source = "room")
@@ -35,8 +34,7 @@ public abstract class BookingMapper {
     public abstract List<BookingEntity> toListEntity(List<BookingDto> dtos);
 
     public abstract List<BookingDto> toListDto(List<BookingEntity> entities);
-
-
 }
+
 
 

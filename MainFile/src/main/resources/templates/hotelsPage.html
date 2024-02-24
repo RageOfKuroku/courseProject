@@ -3,46 +3,87 @@
 <head>
     <title>Список отелей</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .hotel-card {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        .hotel-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .hotels-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    </style>
 </head>
 <body>
-<div class="container py-5">
-    <h1 class="mb-5">Отели</h1>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Название</th>
-            <th scope="col">Адрес</th>
-            <th scope="col">Рейтинг</th>
-            <th scope="col">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="hotel : ${hotels}">
-            <th scope="row" th:text="${hotel.hotelId}"></th>
-            <td th:text="${hotel.name}"></td>
-            <td th:text="${hotel.address}"></td>
-            <td th:text="${hotel.rating}"></td>
-            <td>
-                <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
-                    <button type="submit" class="btn btn-outline-primary">
-                        <i class="bi-cart-fill me-1"></i>
-                        Просмотреть
-                    </button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${user != null}">
-        <form th:action="@{/user/profile}" th:method="get" class="mt-5">
-            <button type="submit" class="btn btn-primary">Перейти к странице пользователя</button>
+<div class="navbar">
+    <h2>Отели</h2>
+    <div th:if="${user != null}" style="display: flex; gap: 10px;">
+        <form th:action="@{/user/profile}" th:method="get">
+            <button type="submit" class="btn btn-primary">Профиль</button>
+        </form>
+        <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
+            <button type="submit" class="btn btn-secondary">Администрирование</button>
+        </form>
+        <form th:action="@{/logout}" th:method="get">
+            <button type="submit" class="btn btn-primary">Выйти</button>
         </form>
     </div>
     <div th:if="${user == null}">
         <a href="/auth/login" class="btn btn-primary">Войти</a>
     </div>
+</div>
 
+<div class="container py-5">
+    <h1 class="mb-5 text-center">Отели</h1>
+    <div class="hotels-container">
+        <div th:each="hotel : ${hotels}" class="hotel-card">
+            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
+            <div>
+                <h2 th:text="${hotel.name}"></h2>
+                <p th:text="${hotel.address}"></p>
+                <p th:text="${hotel.rating}"></p>
+            </div>
+            <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi-eye-fill me-1"></i>
+                    Просмотреть
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>© 2024 Отели</p>
 </div>
 </body>
 </html>

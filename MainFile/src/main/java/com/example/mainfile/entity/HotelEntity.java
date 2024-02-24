@@ -19,6 +19,4 @@ public class HotelEntity {
     private String description;
     @Lob
     private byte[] imageToShow;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
-    private List<RoomEntity> rooms;
 }

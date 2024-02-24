@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdminController {
-    @GetMapping("/admin")
+    @GetMapping
     public String showMainPage(Authentication authentication) {
         return "adminMainPage";
     }

@@ -3,14 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Страница администратора</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container py-5">
-  <h1 class="mb-4">Страница администратора</h1>
-  <div class="d-flex flex-column align-items-start">
-    <a class="btn btn-primary mb-3" th:href="@{/admin/hotels/addHotel}">Список отелей</a>
-    <a class="btn btn-danger" th:href="@{/users}">Список пользователей</a>
+  <div class="jumbotron text-center">
+    <h1 class="display-4">Страница администратора</h1>
+    <p class="lead">Добро пожаловать на страницу администратора. Здесь вы можете управлять отелями и пользователями.</p>
+    <hr class="my-4">
+    <p>Выберите одну из следующих опций:</p>
+    <div class="d-flex justify-content-around mb-3">
+      <a class="btn btn-primary btn-lg btn-block w-25" th:href="@{/admin/hotels/addHotel}" role="button">Список отелей</a>
+      <a class="btn btn-danger btn-lg btn-block w-25" th:href="@{/admin/users}" role="button">Список пользователей</a>
+    </div>
   </div>
 </div>
 </body>
