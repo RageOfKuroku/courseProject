@@ -27,6 +27,11 @@ public interface HotelMapper {
 
     @Mapping(target = "hotelId", ignore = true)
     void update(@MappingTarget HotelEntity entity, HotelDto dto);
+
+    @Mapping(target = "hotelId", ignore = true)
+    @Mapping(target = "imageToShow", ignore = true)
+    void updateWithoutImage(@MappingTarget HotelEntity entity, HotelDto dto);
+
     List<HotelEntity> toListEntity(List<HotelDto> dtos);
 
     List<HotelDto> toListDto(List<HotelEntity> entities);

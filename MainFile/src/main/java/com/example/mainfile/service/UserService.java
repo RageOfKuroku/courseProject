@@ -59,6 +59,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteById(UUID id) {
+        repository.deleteUserBookings(id);
         repository.deleteById(id);
     }
 
