@@ -22,8 +22,6 @@ public class UserDto {
 
     BookingService bookingService;
 
-
-
     private UUID id;
     @Email(message = "wrong email")
     @NotBlank(message = "empty email")

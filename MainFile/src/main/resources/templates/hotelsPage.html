@@ -5,27 +5,65 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .hotel-card {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
             max-width: 300px;
         }
         .hotel-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: .25rem;
+        }
+        .hotel-card .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .hotel-card .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .hotel-card .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .hotel-card .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hotel-card .card-footer .btn {
+            width: 120px;
+        }
+        .hotels-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
         }
         .navbar {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 20px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #dee2e6;
+        }
+        .navbar .logo {
+            width: 100px;
+            height: 50px;
+        }
+        .navbar .search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar .search input {
+            width: 300px;
+        }
+        .navbar .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .footer {
             display: flex;
@@ -33,21 +71,57 @@
             padding: 20px;
             background-color: #f8f9fa;
             border-top: 1px solid #dee2e6;
-            position: fixed;
+            position: relative;
             width: 100%;
             bottom: 0;
         }
-        .hotels-container {
+        .filters {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .filters .form-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .filters .form-group label {
+            font-weight: bold;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        .pagination .page-item {
+            margin: 5px;
+        }
+        .pagination .page-link {
+            color: #007bff;
+        }
+        .pagination .active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
         }
     </style>
 </head>
 <body>
 <div class="navbar">
-    <h2>Отели</h2>
-    <div th:if="${user != null}" style="display: flex; gap: 10px;">
+    <a href="/" class="logo">
+        <img src="logo.png" alt="Отели">
+    </a>
+    <div class="search">
+        <input type="text" class="form-control" placeholder="Поиск отелей">
+        <button class="btn btn-primary">Найти</button>
+    </div>
+    <div th:if="${user != null}" class="user">
         <form th:action="@{/user/profile}" th:method="get">
             <button type="submit" class="btn btn-primary">Профиль</button>
         </form>
@@ -58,29 +132,71 @@
             <button type="submit" class="btn btn-primary">Выйти</button>
         </form>
     </div>
-    <div th:if="${user == null}">
+    <div th:if="${user == null}" class="user">
         <a href="/auth/login" class="btn btn-primary">Войти</a>
+    </div>
+</div>
+
+<div class="filters">
+    <div class="form-group">
+        <label for="price">Цена</label>
+        <select id="price" class="form-control">
+            <option value="">Любая</option>
+            <option value="low">Низкая</option>
+            <option value="medium">Средняя</option>
+            <option value="high">Высокая</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="distance">Расстояние</label>
+        <select id="distance" class="form-control">
+            <option value="">Любое</option>
+            <option value="near">Близко</option>
+            <option value="far">Далеко</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="stars">Звездность</label>
+        <select id="stars" class="form-control">
+            <option value="">Любая</option>
+            <option value="1">1 звезда</option>
+            <option value="2">2 звезды</option>
+            <option value="3">3 звезды</option>
+            <option value="4">4 звезды</option>
+            <option value="5">5 звезд</option>
+        </select>
     </div>
 </div>
 
 <div class="container py-5">
     <h1 class="mb-5 text-center">Отели</h1>
     <div class="hotels-container">
-        <div th:each="hotel : ${hotels}" class="hotel-card">
-            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
-            <div>
-                <h2 th:text="${hotel.name}"></h2>
-                <p th:text="${hotel.address}"></p>
-                <p th:text="${hotel.rating}"></p>
+        <div th:each="hotel : ${hotels}" class="hotel-card card">
+            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image card-img-top">
+            <div class="card-body">
+                <h2 class="card-title" th:text="${hotel.name}"></h2>
+                <p class="card-text" th:text="${hotel.address}"></p>
+                <p class="card-text" th:text="${hotel.rating}"></p>
             </div>
-            <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
-                <button type="submit" class="btn btn-outline-primary">
-                    <i class="bi-eye-fill me-1"></i>
-                    Просмотреть
-                </button>
-            </form>
+            <div class="card-footer">
+                <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="bi-eye-fill me-1"></i>
+                        Просмотреть
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+<div class="pagination">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Следующая</a></li>
+    </ul>
 </div>
 <div class="footer">
     <p>© 2024 Отели</p>

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends JpaRepository<HotelEntity, Integer> {
 
+    List<HotelEntity> findByNameContainingAndAddressContaining(String name, String address);
 }

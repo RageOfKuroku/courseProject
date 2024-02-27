@@ -1,6 +1,7 @@
 package com.example.mainfile.web.admin;
 
 import com.example.mainfile.dto.HotelDto;
+import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -71,5 +72,28 @@ public class AdminHotelController {
         service.updateHotel(id, hotelDto);
         return "redirect:/admin/hotels/addHotel";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("searchName") String searchName, @RequestParam("searchAddress") String searchAddress, Model model) {
+        List<HotelDto> hotels = service.searchHotels(searchName, searchAddress);
+        model.addAttribute("hotels", hotels);
+        model.addAttribute("hotel", new HotelDto());
+        return "adminPageHotels";
+    }
+
+    @GetMapping("/sort")
+    public String sort(@RequestParam("sortRating") String sortRating, Model model) {
+        List<HotelDto> hotels;
+        if ("asc".equals(sortRating)) {
+            hotels = service.sortHotelsAscending();
+        } else {
+            hotels = service.sortHotelsDescending();
+        }
+        model.addAttribute("hotels", hotels);
+        model.addAttribute("hotel", new HotelDto());
+        return "adminPageHotels";
+    }
+
+
 }
 

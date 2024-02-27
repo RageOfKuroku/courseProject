@@ -5,7 +5,9 @@ import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.service.BookingService;
 import com.example.mainfile.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +39,4 @@ public class AdminUserController {
         userService.deleteById(id);
         return "redirect:/admin/users";
     }
-
-
-
-
 }

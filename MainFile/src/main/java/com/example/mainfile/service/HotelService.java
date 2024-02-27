@@ -7,6 +7,7 @@ import com.example.mainfile.mapper.HotelMapper;
 import com.example.mainfile.repository.HotelRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter
+@Transactional
 public class HotelService {
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
@@ -27,12 +29,12 @@ public class HotelService {
         return hotelMapper.toListDto(hotelRepository.findAll());
     }
 
-    public HotelDto createHotel(HotelDto hotel) {
+    public void createHotel(HotelDto hotel) {
         HotelEntity save = hotelRepository.save(hotelMapper.toEntity(hotel));
-        return hotelMapper.toDto(save);
+        hotelMapper.toDto(save);
     }
 
-    public HotelDto updateHotel(Integer id, HotelDto dto) {
+    public void updateHotel(Integer id, HotelDto dto) {
         if(id != null){
             HotelEntity hotelEntity = hotelRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
@@ -42,15 +44,11 @@ public class HotelService {
                 hotelMapper.updateWithoutImage(hotelEntity, dto);
             }
             hotelRepository.save(hotelEntity);
-            return dto;
         }else {
             throw new ResourceNotFoundException("Hotel with this ID not found");
         }
     }
 
-
-
-    @Transactional
     public void deleteHotel(Integer id) {
         if(id != null) {
             hotelRepository.deleteById(id);
@@ -62,5 +60,17 @@ public class HotelService {
 
     public void deleteAll(){
         hotelRepository.deleteAll();
+    }
+
+    public List<HotelDto> searchHotels(String searchName, String searchAddress) {
+        return hotelMapper.toListDto(hotelRepository.findByNameContainingAndAddressContaining(searchName, searchAddress));
+    }
+
+    public List<HotelDto> sortHotelsAscending() {
+        return hotelMapper.toListDto(hotelRepository.findAll(Sort.by(Sort.Direction.ASC, "rating")));
+    }
+
+    public List<HotelDto> sortHotelsDescending() {
+        return hotelMapper.toListDto(hotelRepository.findAll(Sort.by(Sort.Direction.DESC, "rating")));
     }
 }

@@ -10,6 +10,7 @@ import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -84,7 +85,6 @@ public class UserService implements UserDetailsService {
         return repository.findByEmail(email)
                 .orElseThrow(RuntimeException::new);
     }
-
-
-
 }
+
+
