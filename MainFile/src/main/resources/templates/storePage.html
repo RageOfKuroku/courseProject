@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Страница магазина</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .store-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        .store-details {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .store-details h1, p {
+            margin: 0;
+        }
+        .product-table th, .product-table td {
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="store-details">
+        <img th:src="@{'data:image/png;base64,'+${store.getLogoFromBytes()}}" alt="storePhoto" class="store-image">
+        <div>
+            <h1 th:text="${store.name}" class="display-4"></h1>
+            <p th:text="${store.address}" class="lead"></p>
+            <p th:text="${store.rating}" class="lead"></p>
+        </div>
+    </div>
+    <h2 class="my-4 display-5">Список продуктов</h2>
+    <table class="table table-hover product-table">
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Наименование</th>
+            <th>Тип</th>
+            <th>Статус</th>
+            <th>Количество</th>
+            <th>Цена(1 шт.)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, stat : ${products}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.getProductType}"></td>
+            <td th:text="${product.getProductStatus}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td>
+                <form th:action="@{/stores/orderProduct}" method="post">
+                    <input type="hidden" name="productId" th:value="${product.productId}" />
+                    <div class="form-group" th:if="${product.getProductStatus != product.getProductStatus.OUT_OF_STOCK}">
+                        <label for="quantity">Количество:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="${product.quantity}" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" th:if="${product.getProductStatus != product.getProductStatus.OUT_OF_STOCK}">Заказать</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <a href="/stores" class="btn btn-primary mt-3">Возврат к магазинам</a> <!-- Добавил кнопку Возврата к магазинам -->
+</div>
+</body>
+</html>

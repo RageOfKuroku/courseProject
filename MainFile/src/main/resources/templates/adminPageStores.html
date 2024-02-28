@@ -29,10 +29,10 @@
                 <a class="nav-link" href="#searchSortSection">Поиск и сортировка</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#addHotelSection">Добавить отель</a>
+                <a class="nav-link" href="#addStoreSection">Добавить магазин</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#hotelsListSection">Список отелей</a>
+                <a class="nav-link" href="#storesListSection">Список магазинов</a>
             </li>
         </ul>
     </div>
@@ -43,56 +43,53 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="heading">Поиск и сортировка</h2>
-                    <form th:action="@{/admin/hotels/search}" method="get">
+                    <form th:action="@{/admin/stores/search}" method="get">
                         <div class="form-group">
                             <label for="searchName">Поиск по названию</label>
                             <input type="text" name="searchName" class="form-control" id="searchName"
-                                   placeholder="Введите название отеля">
-                        </div>
-                        <div class="form-group">
-                            <label for="searchAddress">Поиск по адресу</label>
-                            <input type="text" name="searchAddress" class="form-control" id="searchAddress"
-                                   placeholder="Введите адрес отеля">
+                                   placeholder="Введите название магазина">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Поиск</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6" id="addHotelSection">
+
+        <div class="col-lg-6" id="addStoreSection">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="heading">Добавить отель</h2>
-                    <form th:action="@{/admin/hotels/addHotel}" th:object="${hotel}" method="post"
+                    <h2 class="heading">Добавить магазин</h2>
+                    <form th:action="@{/admin/stores/addStore}" th:object="${store}" method="post"
                           enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">Название</label>
                             <input type="text" th:field="*{name}" class="form-control" id="name"
-                                   placeholder="Введите название отеля">
+                                   placeholder="Введите название магазина">
                         </div>
                         <div class="form-group">
                             <label for="address">Адрес</label>
                             <input type="text" th:field="*{address}" class="form-control" id="address"
-                                   placeholder="Введите адрес отеля">
+                                   placeholder="Введите адрес магазина">
                         </div>
                         <div class="form-group">
                             <label for="rating">Рейтинг</label>
                             <input type="number" th:field="*{rating}" class="form-control" id="rating"
-                                   placeholder="Введите рейтинг отеля">
+                                   placeholder="Введите рейтинг магазина">
                         </div>
                         <div class="form-group">
-                            <label>Изображение отеля</label><br>
-                            <input type="file" name="file" placeholder="Выберите Фото">
+                            <label>Логотип магазина</label><br>
+                            <input type="file" name="file" placeholder="Выберите логотип">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Добавить</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-lg-12" id="hotelsListSection">
+
+        <div class="col-lg-12" id="storesListSection">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="heading">Список отелей</h2>
+                    <h2 class="heading">Список магазинов</h2>
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -101,28 +98,28 @@
                             <th scope="col">Адрес</th>
                             <th scope="col">
                                 Рейтинг
-                                <a th:href="@{/admin/hotels/sort(sortRating='asc')}" class="btn btn-link p-0 ml-2">▲</a> <!-- Стрелка вверх -->
-                                <a th:href="@{/admin/hotels/sort(sortRating='desc')}" class="btn btn-link p-0">▼</a> <!-- Стрелка вниз -->
+                                <a th:href="@{/admin/stores/sort(sortRating='asc')}" class="btn btn-link p-0 ml-2">▲</a>
+                                <!-- Стрелка вверх -->
+                                <a th:href="@{/admin/stores/sort(sortRating='desc')}" class="btn btn-link p-0">▼</a>
+                                <!-- Стрелка вниз -->
                             </th>
-
                             <th scope="col">Действия</th>
                         </tr>
                         </thead>
-
                         <tbody>
-                        <tr th:each="hotel, stat : ${hotels}">
+                        <tr th:each="store, stat : ${stores}">
                             <td th:text="${stat.count}"></td>
-                            <td th:text="${hotel.name}"></td>
-                            <td th:text="${hotel.address}"></td>
-                            <td th:text="${hotel.rating}"></td>
+                            <td th:text="${store.name}"></td>
+                            <td th:text="${store.address}"></td>
+                            <td th:text="${store.rating}"></td>
                             <td>
-                                <form th:action="@{/admin/hotels/delete/{id}(id=${hotel.hotelId})}" th:method="post">
+                                <form th:action="@{/admin/stores/delete/{id}(id=${store.storeId})}" th:method="post">
                                     <button type="submit" class="btn btn-danger mb-1">Удалить</button>
                                 </form>
-                                <form th:action="@{/admin/hotels/rooms/{id}(id=${hotel.hotelId})}" method="get">
+                                <form th:action="@{/admin/stores/products/{id}(id=${store.storeId})}" method="get">
                                     <button type="submit" class="btn btn-outline-dark">Просмотреть</button>
                                 </form>
-                                <form th:action="@{/admin/hotels/update/{id}(id=${hotel.hotelId})}" method="get">
+                                <form th:action="@{/admin/stores/update/{id}(id=${store.storeId})}" method="get">
                                     <button type="submit" class="btn btn-outline-secondary">Обновить</button>
                                 </form>
                             </td>
@@ -132,6 +129,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </body>

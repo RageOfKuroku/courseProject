@@ -45,7 +45,7 @@ public class SecurityConfig {
                     cust.successHandler((request, response, authentication) -> {
                         String email = request.getParameter("emailLogin");
                         String password = request.getParameter("password");
-                        response.sendRedirect("/hotels");
+                        response.sendRedirect("/stores");
                     });
                     cust.failureHandler((request, response, authenticationException) -> {
                         String email = request.getParameter("emailLogin");

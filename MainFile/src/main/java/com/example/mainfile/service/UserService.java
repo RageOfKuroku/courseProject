@@ -1,16 +1,13 @@
 package com.example.mainfile.service;
 
-import com.example.mainfile.dto.BookingDto;
 import com.example.mainfile.dto.UserDto;
-import com.example.mainfile.entity.BookingEntity;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
-import com.example.mainfile.mapper.BookingMapper;
+import com.example.mainfile.mapper.OrderMapper;
 import com.example.mainfile.mapper.UserMapper;
 import com.example.mainfile.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +25,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
     private final UserMapper mapper;
-    private final BookingMapper bookingMapper;
+    private final OrderMapper orderMapper;
     private final PasswordEncoder passwordEncoder;
 
     public void save(UserDto userDto) {

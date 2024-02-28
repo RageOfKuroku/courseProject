@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Страница магазина</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1 0 auto;
+        }
+
+        .footer {
+            flex-shrink: 0;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+        }
+
+        .logo img {
+            width: 120px;
+        }
+
+        .search {
+            flex-grow: 1;
+            display: flex;
+            margin-left: 40px;
+        }
+
+        .search input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .store-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .store-card {
+            margin-bottom: 30px;
+        }
+
+        .store-card .card-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a href="/" class="logo">
+            <img src="logo.png" alt="Магазины">
+        </a>
+        <div class="search">
+            <form th:action="@{/stores/search}" method="get">
+                <input type="text" class="form-control" placeholder="Поиск магазинов" name="searchName">
+                <button class="btn btn-primary">Найти</button>
+            </form>
+        </div>
+        <div th:if="${user != null}" class="user">
+            <form th:action="@{/user/profile}" th:method="get">
+                <button type="submit" class="btn btn-primary">Профиль</button>
+            </form>
+            <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
+                <button type="submit" class="btn btn-secondary">Администрирование</button>
+            </form>
+            <form th:action="@{/logout}" th:method="get">
+                <button type="submit" class="btn btn-primary">Выйти</button>
+            </form>
+        </div>
+        <div th:if="${user == null}" class="user">
+            <a href="/auth/login" class="btn btn-primary">Войти</a>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <h1 class="mb-5 text-center">Магазины</h1>
+    <div class="stores-container">
+        <div th:each="store : ${stores}" class="store-card card">
+            <img th:src="@{'data:image/png;base64,'+${store.getLogoFromBytes()}}" alt="storePhoto"
+                 class="store-image card-img-top">
+            <div class="card-body">
+                <h2 class="card-title" th:text="${store.name}"></h2>
+                <p class="card-text" th:text="${store.address}"></p>
+                <p class="card-text" th:text="${store.rating}"></p>
+            </div>
+            <div class="card-footer">
+                <form th:action="@{/stores/{storeId}(storeId=${store.storeId})}" th:method="get">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="bi-eye-fill me-1"></i>
+                        Просмотреть
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p>© 2024 Магазины</p>
+    </div>
+</div>
+</body>
+</html>
