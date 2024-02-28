@@ -25,7 +25,7 @@
       margin-left: auto;
       max-width: 960px;
     }
-    .product-card {
+    .hotel-card {
       display: flex;
       flex-direction: column;
       gap: 15px;
@@ -35,13 +35,13 @@
       border-radius: 5px;
       max-width: 300px;
     }
-    .product-card img {
+    .hotel-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
       border-radius: 5px;
     }
-    .products-container {
+    .hotels-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
@@ -67,19 +67,20 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <h2 class="my-4 text-center">Orders</h2>
-  <div class="products-container">
-    <div th:each="order, stat : ${orders}" class="product-card">
-      <img th:src="@{'data:image/png;base64,'+${order.product.store.getLogoFromBytes()}}" alt="productPhoto" class="product-image">
-      <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; width: 300px; margin: 0 auto;">
-        <h2 style="color: #333; font-size: 20px; margin-bottom: 10px;" th:text="${order.product.productName}"></h2>
-        <p style="color: #666; font-size: 16px; margin-bottom: 10px;" th:text="'Магазин - ' + ${order.product.store.name}"></p>
-        <p style="color: #666; font-size: 16px; margin-bottom: 10px;" th:text="'Количество в заказе - ' + ${order.quantity}"></p>
-        <p style="color: #666; font-size: 16px; margin-bottom: 10px;" th:text="'Итоговая цена - ' + (${order.quantity} * ${order.product.productPrice})"></p>
+  <h2 class="my-4 text-center">Bookings</h2>
+  <div class="hotels-container">
+    <div th:each="booking, stat : ${bookings}" class="hotel-card">
+      <img th:src="@{'data:image/png;base64,'+${booking.room.hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
+      <div>
+        <h2 th:text="${booking.room.getHotel().name}"></h2>
+        <p th:text="${booking.startDate.toString()}"></p>
+        <p th:text="${booking.endDate.toString()}"></p>
+        <p th:text="${booking.room.roomType}"></p>
+        <p th:text="${booking.room.roomPrice}"></p>
       </div>
     </div>
   </div>
-  <a href="/stores" class="btn btn-primary mt-3">Возврат к магазинам</a>
+  <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>
 </div>
 </body>
 </html>

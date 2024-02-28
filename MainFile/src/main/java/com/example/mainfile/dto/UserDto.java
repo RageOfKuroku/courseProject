@@ -1,7 +1,7 @@
 package com.example.mainfile.dto;
 
 import com.example.mainfile.model.Role;
-import com.example.mainfile.service.OrderService;
+import com.example.mainfile.service.BookingService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Builder
 public class UserDto {
 
-    OrderService orderService;
+    BookingService bookingService;
 
     private UUID id;
     @Email(message = "wrong email")
@@ -32,7 +33,7 @@ public class UserDto {
     private Role role;
     private String name;
     private String phoneNumber;
-    private List<OrderDto> bookings;
+    private List<BookingDto> bookings;
     private Integer version;
 }
 

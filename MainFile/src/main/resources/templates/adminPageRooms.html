@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список комнат для отеля</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 960px;
+        }
+
+        .heading {
+            margin: 2rem 0;
+        }
+
+        .table-container {
+            margin: 2rem 0;
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="heading">Добавить комнату</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Тип комнаты</th>
+                    <th scope="col">Статус комнаты</th>
+                    <th scope="col">Цена комнаты</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="roomAttributes, stat : ${hotelRooms}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${roomAttributes.roomType}"></td>
+                    <td th:text="${roomAttributes.roomStatus}"></td>
+                    <td th:text="${roomAttributes.roomPrice}"></td>
+                    <td>
+                        <form th:action="@{/admin/hotels/rooms/delete/{id}(id=${room.roomId})}" th:method="post">
+                            <button type="submit" class="btn btn-danger mb-1">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="heading">Список комнат для отеля</h2>
+            <div class="table-container">
+                <form method="post" th:action="@{/admin/hotels/rooms/add/__${hotelId}__}" th:object="${room}">
+                    <div class="form-group">
+                        <label for="name">Тип комнаты</label>
+                        <select th:field="*{roomType}" class="form-control" id="name">
+                            <option th:each="type : ${T(com.example.mainfile.model.RoomType).values()}"
+                                    th:value="${type}"
+                                    th:text="${type}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Статус комнаты</label>
+                        <select th:field="*{roomStatus}" class="form-control" id="address">
+                            <option th:each="status : ${T(com.example.mainfile.model.RoomStatus).values()}"
+                                    th:value="${status}"
+                                    th:text="${status}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Цена комнаты</label>
+                        <input type="number" th:field="*{roomPrice}" class="form-control" id="rating"
+                               placeholder="Введите цену комнаты">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

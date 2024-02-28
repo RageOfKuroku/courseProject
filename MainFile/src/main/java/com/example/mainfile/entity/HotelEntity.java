@@ -3,20 +3,20 @@ package com.example.mainfile.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "stores")
-public class StoreEntity {
+@Table(name = "hotels")
+public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer storeId;
+    private Integer hotelId;
     private String name;
     private String address;
     private Double rating;
     private String description;
-    private String website;
     @Lob
-    private byte[] logo;
+    private byte[] imageToShow;
 }

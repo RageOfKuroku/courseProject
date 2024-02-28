@@ -29,29 +29,25 @@
         </button>
         <div class="collapse" th:id="'bookings'+${user.id}">
           <div class="card card-body">
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped">
               <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Наименование товара</th>
-                <th scope="col">Тип товара</th>
-                <th scope="col">Магазин</th>
-                <th scope="col">Стоимость товара</th>
-                <th scope="col">Кол-во товара в заказе</th>
-                <th scope="col">Общая стоимость заказа</th>
-                <th scope="col">Описание товара</th>
+                <th scope="col">Дата начала бронирования</th>
+                <th scope="col">Дата окончания бронирования</th>
+                <th scope="col">Отель</th>
+                <th scope="col">Тип комнаты</th>
+                <th scope="col">Стоимость бронирования</th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="booking, stat : ${user.bookings}">
                 <td th:text="${stat.count}"></td>
-                <td th:text="${booking.product.productName}"></td>
-                <td th:text="${booking.product.productType}"></td>
-                <td th:text="${booking.product.store.name}"></td>
-                <td th:text="${booking.product.productPrice}"></td>
-                <td th:text="${booking.quantity}">Количество</td>
-                <td th:text="${booking.product.productPrice} * ${booking.quantity}">Общая стоимость</td>
-                <td th:text="${booking.product.description}"></td>
+                <td th:text="${booking.startDate}"></td>
+                <td th:text="${booking.endDate}"></td>
+                <td th:text="${booking.room.hotel.name}"></td>
+                <td th:text="${booking.room.roomType}"></td>
+                <td th:text="${booking.room.roomPrice}"></td>
               </tr>
               </tbody>
             </table>
@@ -62,6 +58,7 @@
         <form th:action="@{'/admin/users/' + ${user.id}}" method="post">
           <button type="submit" class="btn btn-danger">Удалить</button>
         </form>
+
       </td>
     </tr>
     </tbody>

@@ -6,16 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderDto {
+public class BookingDto {
     private Integer id;
     private UserDto user;
-    private ProductDto product;
-    private Integer quantity;
-    private LocalDate orderDate;
-    private LocalDate deliveryDate;
+    private RoomDto room;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }
+
+
