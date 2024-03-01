@@ -1,20 +1,15 @@
 package com.example.mainfile.service;
 
 import com.example.mainfile.dto.BookingDto;
-import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.RoomDto;
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.BookingEntity;
-import com.example.mainfile.entity.HotelEntity;
-import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.model.RoomStatus;
 import com.example.mainfile.repository.BookingRepository;
-import com.example.mainfile.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,14 +25,14 @@ public class BookingService {
     private final BookingMapper bookingMapper;
     private final RoomService roomService;
     private final UserService userService;
-    
 
-    public BookingDto save(BookingDto booking) {
+
+    public void save(BookingDto booking) {
         if (booking.getRoom() == null) {
             throw new IllegalArgumentException("RoomId cannot be null for a booking");
         }
-        BookingEntity save = bookingRepository.saveAndFlush(bookingMapper.toEntity(booking));
-        return bookingMapper.toDto(save);
+        BookingEntity bookingEntity = bookingMapper.toEntity(booking);
+        bookingRepository.save(bookingEntity);
     }
 
     public void saveBooking(Integer roomId, BookingDto bookingDto, UUID userId) {
@@ -46,6 +41,7 @@ public class BookingService {
 
         if (optionalUser.isPresent() && room != null && room.getRoomStatus() == RoomStatus.AVAILABLE) {
             UserDto user = optionalUser.get();
+
 
             bookingDto.setUser(user);
             bookingDto.setRoom(room);
@@ -58,6 +54,7 @@ public class BookingService {
             System.out.println("Room is not available for booking");
         }
     }
+
 
     public List<BookingDto> getBookingsForUser(UUID userId) {
         List<BookingEntity> bookings = bookingRepository.findAllByUserId(userId);

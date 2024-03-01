@@ -73,4 +73,9 @@ public class HotelService {
     public List<HotelDto> sortHotelsDescending() {
         return hotelMapper.toListDto(hotelRepository.findAll(Sort.by(Sort.Direction.DESC, "rating")));
     }
+
+    public HotelEntity getHotelEntityById(Integer hotelId) {
+        HotelDto hotelDto = getHotelById(hotelId);
+        return hotelMapper.toEntity(hotelDto);
+    }
 }

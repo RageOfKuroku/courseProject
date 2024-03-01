@@ -1,7 +1,6 @@
 package com.example.mainfile.entity;
 
 import com.example.mainfile.model.Role;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

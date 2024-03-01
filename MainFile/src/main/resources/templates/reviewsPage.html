@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Отзывы на отели</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/reviewCSS.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center my-4">Отзывы на отели</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Пользователь</th>
+            <th>Оценка</th>
+            <th>Отель</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+            <td th:text="${review.user}"></td>
+            <td th:text="${review.rating}"></td>
+            <td th:text="${review.hotel}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 class="text-center my-4">Добавить отзыв</h2>
+    <form th:object="${newReview}" th:action="@{/hotels/{hotelId}/reviews(hotelId=${newReview.hotel.hotelId})}" method="post" class="form-group">
+        <div class="form-row">
+            <div class="col">
+                <label>Пользователь:
+                    <input type="text" th:field="*{user.name}" class="form-control" readonly>
+                </label>
+                <div th:if="${user.name == null}">
+                    <p style="color: red;">Пожалуйста, укажите своё имя в профиле.</p>
+                </div>
+
+            </div>
+            <div class="col">
+                <label>Оценка:
+                    <input type="number" th:field="*{rating}" class="form-control">
+                </label>
+            </div>
+            <div class="col">
+                <label>Отель:
+                    <input type="text" th:field="*{hotel.name}" class="form-control" readonly>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Впечатления:
+                <textarea th:field="*{impressions}" class="form-control"></textarea>
+            </label>
+        </div>
+        <input type="submit" value="Добавить" class="btn btn-primary mt-3">
+    </form>
+
+</div>
+</body>
+</html>

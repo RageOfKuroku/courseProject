@@ -28,7 +28,7 @@ public class RoomEntity {
     @JoinColumn(name="hotel_id", nullable=false)
     private HotelEntity hotel;
 
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "room", fetch = FetchType.EAGER)
     private BookingEntity booking;
 
 

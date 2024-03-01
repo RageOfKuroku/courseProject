@@ -25,7 +25,7 @@ public class BookingEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="user_id")
     @ToString.Exclude
     private UserEntity user;

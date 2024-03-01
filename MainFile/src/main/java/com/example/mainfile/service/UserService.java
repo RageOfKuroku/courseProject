@@ -31,6 +31,8 @@ public class UserService implements UserDetailsService {
     private final BookingMapper bookingMapper;
     private final PasswordEncoder passwordEncoder;
 
+
+
     public void save(UserDto userDto) {
         UserEntity entity = mapper.toEntity(userDto);
         repository.save(entity);

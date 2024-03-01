@@ -3,114 +3,7 @@
 <head>
     <title>Список отелей</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .hotel-card {
-            max-width: 300px;
-        }
-        .hotel-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: .25rem;
-        }
-        .hotel-card .card-body {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .hotel-card .card-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .hotel-card .card-text {
-            font-size: 1rem;
-            color: #6c757d;
-        }
-        .hotel-card .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .hotel-card .card-footer .btn {
-            width: 120px;
-        }
-        .hotels-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 20px;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .navbar .logo {
-            width: 100px;
-            height: 50px;
-        }
-        .navbar .search {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .navbar .search input {
-            width: 300px;
-        }
-        .navbar .user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .footer {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-            position: relative;
-            width: 100%;
-            bottom: 0;
-        }
-        .filters {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .filters .form-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .filters .form-group label {
-            font-weight: bold;
-        }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
-        .pagination .page-item {
-            margin: 5px;
-        }
-        .pagination .page-link {
-            color: #007bff;
-        }
-        .pagination .active .page-link {
-            background-color: #007bff;
-            border-color: #007bff;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/hotelsCSS.css">
 </head>
 <body>
 <div class="navbar">
@@ -172,7 +65,8 @@
     <h1 class="mb-5 text-center">Отели</h1>
     <div class="hotels-container">
         <div th:each="hotel : ${hotels}" class="hotel-card card">
-            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image card-img-top">
+            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto"
+                 class="hotel-image card-img-top">
             <div class="card-body">
                 <h2 class="card-title" th:text="${hotel.name}"></h2>
                 <p class="card-text" th:text="${hotel.address}"></p>
@@ -183,6 +77,12 @@
                     <button type="submit" class="btn btn-outline-primary">
                         <i class="bi-eye-fill me-1"></i>
                         Просмотреть
+                    </button>
+                </form>
+                <form th:action="@{/hotels/{hotelId}/reviews(hotelId=${hotel.hotelId})}" th:method="get">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <i class="bi-chat-dots-fill me-1"></i>
+                        Отзывы
                     </button>
                 </form>
             </div>

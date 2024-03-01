@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/hotels").permitAll()
+                        .requestMatchers("/hotels/{hotelId}/reviews").hasAnyAuthority("USER","ADMIN")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN"));
 
