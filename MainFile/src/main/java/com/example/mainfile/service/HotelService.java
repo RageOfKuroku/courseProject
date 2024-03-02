@@ -2,9 +2,15 @@ package com.example.mainfile.service;
 
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.entity.HotelEntity;
+import com.example.mainfile.entity.ReviewEntity;
+import com.example.mainfile.entity.RoomEntity;
+import com.example.mainfile.entity.BookingEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.HotelMapper;
+import com.example.mainfile.repository.BookingRepository;
 import com.example.mainfile.repository.HotelRepository;
+import com.example.mainfile.repository.ReviewRepository;
+import com.example.mainfile.repository.RoomRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -19,6 +25,9 @@ import java.util.List;
 public class HotelService {
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
+    private final ReviewRepository reviewRepository;
+    private final RoomRepository roomRepository;
+    private final BookingRepository bookingRepository;
 
     public HotelDto getHotelById(Integer id) {
         HotelEntity hotelNotFound = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
@@ -49,13 +58,20 @@ public class HotelService {
         }
     }
 
-    public void deleteHotel(Integer id) {
-        if(id != null) {
-            hotelRepository.deleteById(id);
-        }
-        else{
-            throw new ResourceNotFoundException("Hotel with this ID not found");
-        }
+    @Transactional
+    public void deleteHotel(Integer hotelId) {
+        HotelEntity hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+        List<ReviewEntity> reviews = reviewRepository.findByHotel(hotel);
+        List<RoomEntity> rooms = roomRepository.findByHotel(hotel);
+        List<BookingEntity> bookings = bookingRepository.findByRoomIn(rooms);
+
+        bookingRepository.deleteAll(bookings);
+
+        reviewRepository.deleteAll(reviews);
+
+        roomRepository.deleteAll(rooms);
+
+        hotelRepository.delete(hotel);
     }
 
     public void deleteAll(){
@@ -78,4 +94,6 @@ public class HotelService {
         HotelDto hotelDto = getHotelById(hotelId);
         return hotelMapper.toEntity(hotelDto);
     }
+
+
 }

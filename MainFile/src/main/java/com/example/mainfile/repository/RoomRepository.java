@@ -14,9 +14,5 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
     List<RoomEntity> findByHotel(HotelEntity hotel);
 
-    @Query("SELECT r.hotel FROM RoomEntity r WHERE r.roomId = :roomId")
-    HotelEntity findHotelByRoomId(@Param("roomId") Integer roomId);
-
-
 }
 

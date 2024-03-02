@@ -1,22 +1,23 @@
 package com.example.mainfile.service;
 
 import com.example.mainfile.dto.HotelDto;
+import com.example.mainfile.entity.BookingEntity;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.BookingMapper;
 import com.example.mainfile.mapper.HotelMapper;
+import com.example.mainfile.repository.BookingRepository;
 import com.example.mainfile.repository.HotelRepository;
 import com.example.mainfile.repository.RoomRepository;
 import com.example.mainfile.dto.RoomDto;
 import com.example.mainfile.entity.RoomEntity;
 import com.example.mainfile.mapper.RoomMapper;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class RoomService {
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
     private final BookingMapper bookingMapper;
+    private final BookingRepository bookingRepository;
     public RoomDto getRoomById(Integer id) {
         RoomEntity roomEntity = roomRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found"));
@@ -50,14 +52,14 @@ public class RoomService {
         return roomMapper.toListDto(roomRepository.findAll());
     }
 
-    public RoomDto addRoom(RoomDto room) {
+    public void addRoom(RoomDto room) {
         Integer hotelId = room.getHotel().getHotelId();
         HotelEntity hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
         RoomEntity roomEntity = roomMapper.toEntity(room);
         roomEntity.setHotel(hotel);
         RoomEntity savedRoom = roomRepository.save(roomEntity);
-        return roomMapper.toDto(savedRoom);
+        roomMapper.toDto(savedRoom);
     }
 
 
@@ -70,14 +72,16 @@ public class RoomService {
         }
     }
 
-    public void deleteRoom(Integer id) {
-        if(id != null) {
-            roomRepository.deleteById(id);
-        }
-        else{
-            throw new ResourceNotFoundException("Hotel with this ID not found");
-        }
+    @Transactional
+    public void deleteRoom(Integer roomId) {
+        RoomEntity room = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        List<BookingEntity> bookings = bookingRepository.findByRoom(room);
+
+        bookingRepository.deleteAll(bookings);
+
+        roomRepository.delete(room);
     }
+
 
     public void deleteAll(){
         roomRepository.deleteAll();

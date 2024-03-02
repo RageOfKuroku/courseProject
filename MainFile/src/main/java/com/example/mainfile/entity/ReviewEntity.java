@@ -23,9 +23,8 @@ public class ReviewEntity {
 
     private int rating;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "hotel_id")
-    @JsonIgnore
     private HotelEntity hotel;
 
     private String impressions;

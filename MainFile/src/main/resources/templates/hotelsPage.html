@@ -73,13 +73,13 @@
                 <p class="card-text" th:text="${hotel.rating}"></p>
             </div>
             <div class="card-footer">
-                <form th:action="@{/hotels/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                <form th:action="@{/hotels/details/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
                     <button type="submit" class="btn btn-outline-primary">
                         <i class="bi-eye-fill me-1"></i>
                         Просмотреть
                     </button>
                 </form>
-                <form th:action="@{/hotels/{hotelId}/reviews(hotelId=${hotel.hotelId})}" th:method="get">
+                <form th:action="@{/reviews/hotel/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
                     <button type="submit" class="btn btn-outline-secondary">
                         <i class="bi-chat-dots-fill me-1"></i>
                         Отзывы

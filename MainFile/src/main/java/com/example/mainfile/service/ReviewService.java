@@ -1,15 +1,19 @@
 package com.example.mainfile.service;
 
+import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.ReviewDto;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.entity.ReviewEntity;
 import com.example.mainfile.entity.UserEntity;
+import com.example.mainfile.exception.ResourceNotFoundException;
 import com.example.mainfile.mapper.HotelMapper;
 import com.example.mainfile.mapper.ReviewMapper;
+import com.example.mainfile.model.Role;
 import com.example.mainfile.repository.ReviewRepository;
 import com.example.mainfile.repository.HotelRepository;
 import com.example.mainfile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,11 +46,39 @@ public class ReviewService {
                 .orElse("Неизвестный отель");
     }
 
-    public void addReview(ReviewDto reviewDto, UserEntity user) {
-        ReviewEntity reviewEntity = reviewMapper.toEntity(reviewDto);
-        reviewEntity.setUser(user);
-        reviewRepository.save(reviewEntity);
+    public void addReview(ReviewDto reviewDto, UserEntity user, Integer hotelId) {
+        HotelEntity hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+
+        ReviewEntity existingReview = reviewRepository.findByUserAndHotel(user, hotel);
+        if (existingReview != null) {
+            existingReview.setRating(reviewDto.getRating());
+            existingReview.setImpressions(reviewDto.getImpressions());
+            reviewRepository.save(existingReview);
+        } else {
+            ReviewEntity newReview = new ReviewEntity();
+            newReview.setUser(user);
+            newReview.setHotel(hotel);
+            newReview.setRating(reviewDto.getRating());
+            newReview.setImpressions(reviewDto.getImpressions());
+            reviewRepository.save(newReview);
+        }
     }
+
+    public Integer deleteReview(Integer reviewId, UserEntity currentUser) {
+        ReviewEntity review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResourceNotFoundException("Review not found"));
+        Integer hotelId = review.getHotel().getHotelId();
+        if (review.getUser().equals(currentUser)) {
+            reviewRepository.delete(review);
+        }
+        return hotelId;
+    }
+
+
+
+
+
+
 
 }
 

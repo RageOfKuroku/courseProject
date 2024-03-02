@@ -8,26 +8,22 @@
 <body>
 <div class="container">
     <h1 class="text-center my-4">Отзывы на отели</h1>
-
     <table class="table table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Пользователь</th>
-            <th>Оценка</th>
-            <th>Отель</th>
-        </tr>
-        </thead>
-        <tbody>
         <tr th:each="review : ${reviews}">
-            <td th:text="${review.user}"></td>
+            <td th:text="${review.user.name}"></td>
             <td th:text="${review.rating}"></td>
-            <td th:text="${review.hotel}"></td>
+            <td th:text="${review.hotel.name}"></td>
+            <td th:text="${review.impressions}"></td>
+            <td>
+                <form th:if="${review.user.name == user.name}" th:action="@{/reviews/{reviewId}/delete(reviewId=${review.id})}" method="post">
+                    <input type="submit" value="Удалить" class="btn btn-danger">
+                </form>
+            </td>
         </tr>
-        </tbody>
     </table>
 
     <h2 class="text-center my-4">Добавить отзыв</h2>
-    <form th:object="${newReview}" th:action="@{/hotels/{hotelId}/reviews(hotelId=${newReview.hotel.hotelId})}" method="post" class="form-group">
+    <form th:object="${newReview}" th:action="@{/reviews/hotel/{hotelId}/add(hotelId=${newReview.hotel.hotelId})}" method="post" class="form-group">
         <div class="form-row">
             <div class="col">
                 <label>Пользователь:

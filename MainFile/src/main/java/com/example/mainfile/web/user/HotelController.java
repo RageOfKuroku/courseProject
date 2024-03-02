@@ -42,7 +42,7 @@ public class HotelController {
         return "hotelsPage";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public String showHotelDetails(@PathVariable Integer id, Model model) {
         HotelDto hotel = service.getHotelById(id);
         List<RoomDto> rooms = roomService.getRoomsByHotelId(id);
@@ -51,7 +51,7 @@ public class HotelController {
         return "hotelPage";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     public String updateHotelDetails(@PathVariable Integer id, @ModelAttribute HotelDto updatedHotel, Model model) {
         service.updateHotel(id, updatedHotel);
         HotelDto hotel = service.getHotelById(id);

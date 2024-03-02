@@ -1,8 +1,6 @@
 package com.example.mainfile.web.additions;
 
-import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.ReviewDto;
-import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.entity.ReviewEntity;
 import com.example.mainfile.entity.UserEntity;
@@ -19,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/hotels/{hotelId}")
+@RequestMapping("/reviews")
 public class ReviewController {
 
     @Autowired
@@ -27,8 +25,8 @@ public class ReviewController {
     @Autowired
     private HotelService hotelService;
 
-    @GetMapping("/reviews")
-    public String showReviews(@PathVariable("hotelId") Integer hotelId,
+    @GetMapping("/hotel/{hotelId}")
+     public String showReviews(@PathVariable("hotelId") Integer hotelId,
                               @AuthenticationPrincipal UserEntity user,
                               Model model) {
         List<ReviewDto> reviews = reviewService.getReviewsByHotelId(hotelId);
@@ -49,15 +47,23 @@ public class ReviewController {
 
 
 
-    @PostMapping("/reviews")
+    @PostMapping("/hotel/{hotelId}/add")
     public String addReview(@PathVariable("hotelId") Integer hotelId,
                             @ModelAttribute("newReview") @Valid ReviewDto reviewDto,
                             BindingResult result, Model model, @AuthenticationPrincipal UserEntity user) {
         if (result.hasErrors()) {
             return showReviews(hotelId, user, model);
         }
-        reviewService.addReview(reviewDto, user);
-        return "redirect:/hotels/" + hotelId + "/reviews";
+        reviewService.addReview(reviewDto, user, hotelId);
+        return "redirect:/reviews/hotel/" + hotelId;
     }
+
+    @PostMapping("/{reviewId}/delete")
+    public String deleteReview(@PathVariable("reviewId") Integer reviewId, @AuthenticationPrincipal UserEntity currentUser) {
+        Integer hotelId = reviewService.deleteReview(reviewId, currentUser);
+        return "redirect:/reviews/hotel/" + hotelId;
+    }
+
+
 }
 
