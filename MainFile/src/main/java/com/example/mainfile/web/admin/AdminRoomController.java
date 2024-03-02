@@ -27,7 +27,7 @@ public class AdminRoomController {
         model.addAttribute("room", room);
         List<RoomDto> rooms = service.getRoomsByHotelId(id);
         model.addAttribute("hotelRooms", rooms);
-        model.addAttribute("hotelId", hotel.getHotelId());
+        model.addAttribute("hotelId", hotel.getId());
         return "adminPageRooms";
     }
 
@@ -35,7 +35,7 @@ public class AdminRoomController {
     @PostMapping("/add")
     public String addRoom(@ModelAttribute RoomDto room) {
         service.addRoom(room);
-        return "redirect:/admin/hotels/rooms/" + room.getHotel().getHotelId();
+        return "redirect:/admin/hotels/rooms/" + room.getHotel().getId();
     }
 
 
@@ -66,7 +66,7 @@ public class AdminRoomController {
     @PostMapping("/delete/{id}")
     public String deleteRoom(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         RoomDto room = service.getRoomById(id);
-        Integer hotelId = room.getHotel().getHotelId();
+        Integer hotelId = room.getHotel().getId();
         service.deleteRoom(id);
         redirectAttributes.addFlashAttribute("message", "Комната успешно удалена!");
         return "redirect:/admin/hotels/rooms/" + hotelId;
@@ -74,5 +74,3 @@ public class AdminRoomController {
 
 
 }
-
-

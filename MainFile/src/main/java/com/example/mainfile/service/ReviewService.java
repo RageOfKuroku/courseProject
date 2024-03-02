@@ -63,16 +63,22 @@ public class ReviewService {
             newReview.setImpressions(reviewDto.getImpressions());
             reviewRepository.save(newReview);
         }
+
+        hotelService.calculateRating(hotelId);
     }
 
     public Integer deleteReview(Integer reviewId, UserEntity currentUser) {
         ReviewEntity review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResourceNotFoundException("Review not found"));
-        Integer hotelId = review.getHotel().getHotelId();
+        Integer hotelId = review.getHotel().getId();
         if (review.getUser().equals(currentUser)) {
             reviewRepository.delete(review);
         }
+
+        hotelService.calculateRating(hotelId);
+
         return hotelId;
     }
+
 
 
 

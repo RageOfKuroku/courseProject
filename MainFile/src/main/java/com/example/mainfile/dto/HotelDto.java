@@ -12,11 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class HotelDto {
-    private Integer hotelId;
+    private Integer id;
     private String name;
     private String address;
     private Double rating;
     private String description;
+    private Integer stars;
     private byte[] imageToShow;
 
     private List<RoomDto> rooms;

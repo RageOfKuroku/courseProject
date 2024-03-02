@@ -7,7 +7,7 @@
 <body>
 <div class="container py-5">
   <h2 class="my-4">Обновить данные отеля</h2>
-  <form th:action="@{/admin/hotels/update/{id}(id=${hotel.hotelId})}" th:method="post" enctype="multipart/form-data">
+  <form th:action="@{/admin/hotels/update/{id}(id=${hotel.id})}" th:method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label for="hotelName">Название отеля</label>
       <input type="text" th:field="*{hotel.name}" class="form-control" id="hotelName" placeholder="Введите название отеля">
@@ -17,8 +17,8 @@
       <input type="text" th:field="*{hotel.address}" class="form-control" id="hotelAddress" placeholder="Введите адрес отеля">
     </div>
     <div class="form-group">
-      <label for="hotelRating">Рейтинг отеля</label>
-      <input type="number" th:field="*{hotel.rating}" class="form-control" id="hotelRating" placeholder="Введите рейтинг отеля">
+      <label for="hotelRating">Звёзды отеля</label>
+      <input type="number" th:field="*{hotel.stars}" class="form-control" id="hotelRating" placeholder="Введите рейтинг отеля">
     </div>
     <div class="form-group">
       <label>Фото отеля</label><br>

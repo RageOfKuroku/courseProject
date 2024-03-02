@@ -9,31 +9,28 @@
 <div class="container">
     <h1 class="text-center my-4">Отзывы на отели</h1>
     <table class="table table-striped">
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Оценка</th>
+            <th>Название отеля</th>
+            <th>Впечатления</th>
+        </tr>
         <tr th:each="review : ${reviews}">
-            <td th:text="${review.user.name}"></td>
+            <td th:text="${review.user != null ? review.user.name : 'Аноним'}"></td>
             <td th:text="${review.rating}"></td>
             <td th:text="${review.hotel.name}"></td>
             <td th:text="${review.impressions}"></td>
-            <td>
-                <form th:if="${review.user.name == user.name}" th:action="@{/reviews/{reviewId}/delete(reviewId=${review.id})}" method="post">
-                    <input type="submit" value="Удалить" class="btn btn-danger">
+            <td th:if="${review.user != null and user != null and review.user.name == user.name}">
+                <form th:action="@{/reviews/{reviewId}/delete(reviewId=${review.id})}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">✖</button>
                 </form>
             </td>
         </tr>
     </table>
 
     <h2 class="text-center my-4">Добавить отзыв</h2>
-    <form th:object="${newReview}" th:action="@{/reviews/hotel/{hotelId}/add(hotelId=${newReview.hotel.hotelId})}" method="post" class="form-group">
+    <form th:object="${newReview}" th:action="@{/reviews/hotel/{id}/add(id=${newReview.hotel.id})}" method="post" class="form-group">
         <div class="form-row">
-            <div class="col">
-                <label>Пользователь:
-                    <input type="text" th:field="*{user.name}" class="form-control" readonly>
-                </label>
-                <div th:if="${user.name == null}">
-                    <p style="color: red;">Пожалуйста, укажите своё имя в профиле.</p>
-                </div>
-
-            </div>
             <div class="col">
                 <label>Оценка:
                     <input type="number" th:field="*{rating}" class="form-control">

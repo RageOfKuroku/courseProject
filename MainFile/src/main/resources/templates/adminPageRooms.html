@@ -53,7 +53,7 @@
         <div class="col-lg-6">
             <h2 class="heading">Список комнат для отеля</h2>
             <div class="table-container">
-                <form method="post" th:action="@{/admin/hotels/rooms/add/__${hotelId}__}" th:object="${room}">
+                <form method="post" th:action="@{/admin/hotels/rooms/add/__${id}__}" th:object="${room}">
                     <div class="form-group">
                         <label for="name">Тип комнаты</label>
                         <select th:field="*{roomType}" class="form-control" id="name">
@@ -75,6 +75,11 @@
                         <input type="number" th:field="*{roomPrice}" class="form-control" id="rating"
                                placeholder="Введите цену комнаты">
                     </div>
+                    <div class="form-group">
+                        <label for="roomImage">Изображение комнаты</label>
+                        <input type="file" th:field="*{imageToShow}" class="form-control-file" id="roomImage">
+                    </div>
+
                     <button type="submit" class="btn btn-primary mt-3">Добавить</button>
                 </form>
             </div>

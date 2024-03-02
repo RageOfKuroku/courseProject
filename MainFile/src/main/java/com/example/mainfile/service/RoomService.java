@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter
+@Transactional
 public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
@@ -39,8 +40,6 @@ public class RoomService {
         return roomDto;
     }
 
-
-
     public List<RoomDto> getRoomsByHotelId(Integer hotelId) {
         HotelEntity hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
         List<RoomEntity> rooms = roomRepository.findByHotel(hotel);
@@ -53,7 +52,7 @@ public class RoomService {
     }
 
     public void addRoom(RoomDto room) {
-        Integer hotelId = room.getHotel().getHotelId();
+        Integer hotelId = room.getHotel().getId();
         HotelEntity hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel with id " + hotelId + " not found"));
         RoomEntity roomEntity = roomMapper.toEntity(room);
@@ -85,5 +84,9 @@ public class RoomService {
 
     public void deleteAll(){
         roomRepository.deleteAll();
+    }
+
+    public List<RoomEntity> getRoomEntitiesByHotelId(Integer id) {
+        return roomRepository.findByHotelId(id);
     }
 }

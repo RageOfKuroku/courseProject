@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Getter
@@ -35,6 +37,7 @@ public class HotelService {
     }
 
     public List<HotelDto> getAllHotels() {
+
         return hotelMapper.toListDto(hotelRepository.findAll());
     }
 
@@ -58,7 +61,6 @@ public class HotelService {
         }
     }
 
-    @Transactional
     public void deleteHotel(Integer hotelId) {
         HotelEntity hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
         List<ReviewEntity> reviews = reviewRepository.findByHotel(hotel);
@@ -95,5 +97,11 @@ public class HotelService {
         return hotelMapper.toEntity(hotelDto);
     }
 
-
+    public void calculateRating(Integer hotelId) {
+        HotelEntity hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+        List<ReviewEntity> reviews = reviewRepository.findByHotel(hotel);
+        double averageRating = reviews.stream().mapToDouble(ReviewEntity::getRating).average().orElse(0.0);
+        hotel.setRating(averageRating);
+        hotelRepository.save(hotel);
+    }
 }

@@ -24,6 +24,7 @@ public class RoomEntity {
     @ElementCollection
     private List<String> additions;
     private String description;
+
     @ManyToOne
     @JoinColumn(name="hotel_id", nullable=false)
     private HotelEntity hotel;
@@ -31,6 +32,8 @@ public class RoomEntity {
     @OneToOne(mappedBy = "room", fetch = FetchType.EAGER)
     private BookingEntity booking;
 
+    @Lob
+    private byte[] imageToShow;
 
 }
 

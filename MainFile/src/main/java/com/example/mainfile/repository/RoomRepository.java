@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
     List<RoomEntity> findByHotel(HotelEntity hotel);
 
+    List<RoomEntity> findByHotelId(Integer hotelId);
 }
 

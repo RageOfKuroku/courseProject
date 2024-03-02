@@ -68,7 +68,7 @@ public class AdminHotelController {
         }
         hotelDto.setName(hotelDto.getName());
         hotelDto.setAddress(hotelDto.getAddress());
-        hotelDto.setRating(hotelDto.getRating());
+        hotelDto.setStars(hotelDto.getStars());
         service.updateHotel(id, hotelDto);
         return "redirect:/admin/hotels/addHotel";
     }
@@ -82,9 +82,9 @@ public class AdminHotelController {
     }
 
     @GetMapping("/sort")
-    public String sort(@RequestParam("sortRating") String sortRating, Model model) {
+    public String sort(@RequestParam("sortStars") String sortStars, Model model) {
         List<HotelDto> hotels;
-        if ("asc".equals(sortRating)) {
+        if ("asc".equals(sortStars)) {
             hotels = service.sortHotelsAscending();
         } else {
             hotels = service.sortHotelsDescending();
@@ -93,7 +93,4 @@ public class AdminHotelController {
         model.addAttribute("hotel", new HotelDto());
         return "adminPageHotels";
     }
-
-
 }
-

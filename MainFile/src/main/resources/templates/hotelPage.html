@@ -19,8 +19,15 @@
         .hotel-details h1, p {
             margin: 0;
         }
-        .room-table th, .room-table td {
-            vertical-align: middle;
+        .room-card {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .room-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
         }
         .btn-primary {
             background-color: #007bff;
@@ -39,40 +46,51 @@
         </div>
     </div>
     <h2 class="my-4 display-5">Список комнат</h2>
-    <table class="table table-hover room-table">
-        <thead>
-        <tr>
-            <th>Номер</th>
-            <th>Тип</th>
-            <th>Статус</th>
-            <th>Цена</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="room : ${rooms}">
-            <td th:text="${room.roomId}"></td>
-            <td th:text="${room.roomType}"></td>
-            <td th:text="${room.roomStatus}"></td>
-            <td th:text="${room.roomPrice}"></td>
-            <td>
-                <form th:action="@{/hotels/bookRoom}" method="post">
-                    <input type="hidden" name="roomId" th:value="${room.roomId}" />
-                    <div class="form-group" th:if="${room.roomStatus != room.roomStatus.BOOKED}">
-                        <label for="startDate">Дата начала:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" required>
+    <div class="room-container">
+        <div th:each="room : ${rooms}" class="room-card card">
+            <img th:src="@{'data:image/png;base64,'+${room.getImageToShow()}}" alt="roomPhoto" class="room-image card-img-top">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${room.roomType}"></h5>
+                <p class="card-text" th:text="${room.description}"></p>
+                <p class="card-text"><strong>Цена:</strong> <span th:text="${room.roomPrice}"></span></p>
+                <p class="card-text"><strong>Статус:</strong> <span th:text="${room.roomStatus}"></span></p>
+                <button class="btn btn-primary" data-toggle="modal" th:attr="data-target='#bookingModal' + ${room.roomId}" th:if="${room.roomStatus != room.roomStatus.BOOKED}">Забронировать</button>
+            </div>
+            <div class="modal fade" th:id="'bookingModal' + ${room.roomId}" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="bookingModalLabel">Бронирование комнаты</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <form th:action="@{/hotels/bookRoom}" method="post">
+                            <div class="modal-body">
+                                <input type="hidden" name="roomId" th:value="${room.roomId}" />
+                                <div class="form-group">
+                                    <label for="startDate">Дата начала:</label>
+                                    <input type="date" id="startDate" name="startDate" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate">Дата окончания:</label>
+                                    <input type="date" id="endDate" name="endDate" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                <button type="submit" class="btn btn-primary">Забронировать</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group" th:if="${room.roomStatus != room.roomStatus.BOOKED}" >
-                        <label for="endDate" >Дата окончания:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" th:if="${room.roomStatus != room.roomStatus.BOOKED}">Забронировать</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

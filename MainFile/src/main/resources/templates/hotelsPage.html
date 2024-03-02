@@ -65,21 +65,29 @@
     <h1 class="mb-5 text-center">Отели</h1>
     <div class="hotels-container">
         <div th:each="hotel : ${hotels}" class="hotel-card card">
-            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto"
+            <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes() }}" alt="hotelPhoto"
                  class="hotel-image card-img-top">
             <div class="card-body">
                 <h2 class="card-title" th:text="${hotel.name}"></h2>
                 <p class="card-text" th:text="${hotel.address}"></p>
-                <p class="card-text" th:text="${hotel.rating}"></p>
+                <div class="stars">
+                    <th:block th:each="i: ${#numbers.sequence(1, hotel.stars)}">
+                        ★
+                    </th:block>
+                </div>
+                <p class="rating" th:if="${hotel.rating != null}" th:text="${'Рейтинг: ' + hotel.rating}"></p>
+                <p class="rating" th:if="${hotel.rating == null}">Нет оценок</p>
+                <p class="reviews" th:text="${'Количество отзывов: ' + reviewsCount.get(hotel.id)}"></p>
+
             </div>
             <div class="card-footer">
-                <form th:action="@{/hotels/details/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                <form th:action="@{/hotels/details/{id}(id=${hotel.id})}" th:method="get">
                     <button type="submit" class="btn btn-outline-primary">
                         <i class="bi-eye-fill me-1"></i>
-                        Просмотреть
+                        Перейти
                     </button>
                 </form>
-                <form th:action="@{/reviews/hotel/{hotelId}(hotelId=${hotel.hotelId})}" th:method="get">
+                <form th:action="@{/reviews/hotel/{id}(id=${hotel.id})}" th:method="get">
                     <button type="submit" class="btn btn-outline-secondary">
                         <i class="bi-chat-dots-fill me-1"></i>
                         Отзывы
@@ -89,6 +97,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 <div class="pagination">
     <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>

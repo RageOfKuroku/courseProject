@@ -14,4 +14,6 @@ import java.util.List;
         List<ReviewEntity> findByHotel(HotelEntity hotel);
 
         ReviewEntity findByUserAndHotel(UserEntity user, HotelEntity hotel);
+
+        Long countByHotelId(Integer hotelId);
     }
