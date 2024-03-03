@@ -7,13 +7,17 @@
 </head>
 <body>
 <div class="navbar">
-    <a href="/" class="logo">
-        <img src="logo.png" alt="Отели">
+    <a href="/hotels" class="logo">
+        <img src="/img/Sparkle_Sticker_02.png" alt="Отели"/>
     </a>
     <div class="search">
-        <input type="text" class="form-control" placeholder="Поиск отелей">
-        <button class="btn btn-primary">Найти</button>
+        <form th:action="@{/hotels/search}" method="get" class="search-form">
+            <input type="text" name="query" class="form-control" placeholder="Поиск отелей">
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </form>
     </div>
+
+
     <div th:if="${user != null}" class="user">
         <form th:action="@{/user/profile}" th:method="get">
             <button type="submit" class="btn btn-primary">Профиль</button>
@@ -32,34 +36,17 @@
 
 <div class="filters">
     <div class="form-group">
-        <label for="price">Цена</label>
-        <select id="price" class="form-control">
-            <option value="">Любая</option>
-            <option value="low">Низкая</option>
-            <option value="medium">Средняя</option>
-            <option value="high">Высокая</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="distance">Расстояние</label>
-        <select id="distance" class="form-control">
-            <option value="">Любое</option>
-            <option value="near">Близко</option>
-            <option value="far">Далеко</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="stars">Звездность</label>
-        <select id="stars" class="form-control">
-            <option value="">Любая</option>
-            <option value="1">1 звезда</option>
-            <option value="2">2 звезды</option>
-            <option value="3">3 звезды</option>
-            <option value="4">4 звезды</option>
-            <option value="5">5 звезд</option>
+        <label for="stars">Звёздность</label>
+        <select id="stars" class="form-control" onchange="location = this.value;">
+            <option th:each="star : ${#numbers.sequence(1, 5)}"
+                    th:attr="value='/hotels/sortByStars?stars=' + ${star}"
+                    th:text="${star == 1} ? '1 звезда' : (${star} < 5 ? ${star} + ' звезды' : ${star} + ' звезд')"
+                    th:selected="${star == selectedStars}"></option>
+            <option value="/hotels" th:selected="${selectedStars == null}">Любая</option>
         </select>
     </div>
 </div>
+
 
 <div class="container py-5">
     <h1 class="mb-5 text-center">Отели</h1>
@@ -96,19 +83,6 @@
             </div>
         </div>
     </div>
-</div>
-
-
-
-
-<div class="pagination">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Следующая</a></li>
-    </ul>
 </div>
 <div class="footer">
     <p>© 2024 Отели</p>

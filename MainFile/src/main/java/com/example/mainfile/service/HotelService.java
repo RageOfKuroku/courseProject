@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +32,7 @@ public class HotelService {
     private final BookingRepository bookingRepository;
 
     public HotelDto getHotelById(Integer id) {
-        HotelEntity hotelNotFound = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found"));
-        return hotelMapper.toDto(hotelNotFound);
+        return hotelMapper.toDto(hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel with this ID not found")));
     }
 
     public List<HotelDto> getAllHotels() {
@@ -84,6 +83,11 @@ public class HotelService {
         return hotelMapper.toListDto(hotelRepository.findByNameContainingAndAddressContaining(searchName, searchAddress));
     }
 
+    public List<HotelDto> searchHotelsWithoutAddress(String query) {
+        List<HotelEntity> hotelEntities = hotelRepository.findByNameContaining(query);
+        return hotelMapper.toListDto(hotelEntities);
+    }
+
     public List<HotelDto> sortHotelsAscending() {
         return hotelMapper.toListDto(hotelRepository.findAll(Sort.by(Sort.Direction.ASC, "rating")));
     }
@@ -104,4 +108,11 @@ public class HotelService {
         hotel.setRating(averageRating);
         hotelRepository.save(hotel);
     }
+
+    public List<HotelDto> getHotelsByStars(Integer stars) {
+        List<HotelEntity> hotelEntities = hotelRepository.findByStars(stars);
+        return hotelMapper.toListDto(hotelEntities);
+    }
+
+
 }

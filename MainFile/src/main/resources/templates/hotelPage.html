@@ -47,8 +47,8 @@
     </div>
     <h2 class="my-4 display-5">Список комнат</h2>
     <div class="room-container">
-        <div th:each="room : ${rooms}" class="room-card card">
-            <img th:src="@{'data:image/png;base64,'+${room.getImageToShow()}}" alt="roomPhoto" class="room-image card-img-top">
+        <div th:each="room : ${hotelRooms}" class="room-card card">
+            <img th:src="@{'data:image/png;base64,'+${room.getRoomImageFromBytes()}}" alt="roomPhoto" class="room-image card-img-top">
             <div class="card-body">
                 <h5 class="card-title" th:text="${room.roomType}"></h5>
                 <p class="card-text" th:text="${room.description}"></p>

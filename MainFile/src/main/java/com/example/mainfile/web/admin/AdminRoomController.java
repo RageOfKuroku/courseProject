@@ -2,14 +2,18 @@ package com.example.mainfile.web.admin;
 
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.RoomDto;
+import com.example.mainfile.entity.HotelEntity;
+import com.example.mainfile.entity.RoomEntity;
 import com.example.mainfile.service.HotelService;
 import com.example.mainfile.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,22 +35,14 @@ public class AdminRoomController {
         return "adminPageRooms";
     }
 
-
-    @PostMapping("/add")
-    public String addRoom(@ModelAttribute RoomDto room) {
-        service.addRoom(room);
-        return "redirect:/admin/hotels/rooms/" + room.getHotel().getId();
-    }
-
-
     @PostMapping("/add/{id}")
-    public String addRoom(@PathVariable Integer id, @ModelAttribute RoomDto room) {
+    public String addRoom(@PathVariable Integer id, @ModelAttribute RoomDto room, @RequestParam(value = "file") MultipartFile file) throws IOException {
         HotelDto hotel = hotelService.getHotelById(id);
         room.setHotel(hotel);
+        room.setImageToShow(file.getBytes());
         service.addRoom(room);
         return "redirect:/admin/hotels/rooms/" + id;
     }
-
 
     @GetMapping
     public List<RoomDto> getAllRooms() {
@@ -60,6 +56,7 @@ public class AdminRoomController {
 
     @PutMapping("/{id}")
     public RoomDto updateRoom(@PathVariable Integer id, @RequestBody RoomDto roomDto) {
+
         return service.updateRoom(id, roomDto);
     }
 

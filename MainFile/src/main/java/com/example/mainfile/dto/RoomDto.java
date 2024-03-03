@@ -3,7 +3,6 @@ package com.example.mainfile.dto;
 import com.example.mainfile.model.RoomStatus;
 import com.example.mainfile.model.RoomType;
 
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +23,8 @@ public class RoomDto {
     private List<String> additions;
     private String description;
     private HotelDto hotel;
-
-    private List<RoomDto> rooms;
     private byte[] imageToShow;
-    public String getImageFromBytes() {
+    public String getRoomImageFromBytes() {
         return Base64.getEncoder().encodeToString(imageToShow);
     }
 }

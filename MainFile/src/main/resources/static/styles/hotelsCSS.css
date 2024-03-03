@@ -1,5 +1,10 @@
 .hotel-card {
-    max-width: 300px;
+    margin: 20px;
+    transition: box-shadow .3s;
+}
+
+.hotel-card:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 .hotel-card img {
     width: 100%;
@@ -35,16 +40,10 @@
     gap: 20px;
 }
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
     background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-}
-.navbar .logo {
-    width: 100px;
-    height: 50px;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    align-items: center;
 }
 .navbar .search {
     display: flex;
@@ -59,48 +58,45 @@
     align-items: center;
     gap: 10px;
 }
-.footer {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    position: relative;
-    width: 100%;
-    bottom: 0;
-}
-.filters {
+.search-form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
 }
+.search-form input {
+    margin-right: 10px;
+}
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.filters {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 .filters .form-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-weight: bold;
+}
+
+.filters .form-control {
+    border-radius: 5px;
 }
 .filters .form-group label {
     font-weight: bold;
 }
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
+.logo {
+    display: inline-block;
+    margin-right: 20px;
 }
-.pagination .page-item {
-    margin: 5px;
-}
-.pagination .page-link {
-    color: #007bff;
-}
-.pagination .active .page-link {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
+
+.logo img {
+    height: 120px;
+    width: auto;
 }

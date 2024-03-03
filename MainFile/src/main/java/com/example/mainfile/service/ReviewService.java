@@ -32,8 +32,6 @@ public class ReviewService {
     private HotelService hotelService;
     @Autowired
     private HotelMapper hotelMapper;
-    @Autowired
-    private UserRepository userRepository;
 
     public List<ReviewDto> getReviewsByHotelId(Integer hotelId) {
         List<ReviewEntity> reviewEntities = reviewRepository.findByHotel(hotelMapper.toEntity(hotelService.getHotelById(hotelId)));
