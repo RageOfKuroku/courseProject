@@ -40,6 +40,10 @@ public class AdminHotelController {
     @PostMapping("/addHotel")
     public String addHotel(@ModelAttribute("hotel") HotelDto hotelDto, RedirectAttributes redirectAttributes,
                            @RequestParam(value = "file") MultipartFile file) throws IOException {
+        if (hotelDto.getStars() < 1 || hotelDto.getStars() > 5) {
+            redirectAttributes.addFlashAttribute("error", "Звёзды отеля должны быть в диапазоне от 1 до 5");
+            return "redirect:/admin/hotels/addHotel";
+        }
         hotelDto.setImageToShow(file.getBytes());
         service.createHotel(hotelDto);
         redirectAttributes.addFlashAttribute("message", "Отель успешно добавлен!");
@@ -62,6 +66,9 @@ public class AdminHotelController {
     @PostMapping("/update/{id}")
     public String updateHotel(@PathVariable("id") Integer id, @ModelAttribute("hotel") HotelDto hotelDto,
                               @RequestParam("file") MultipartFile file) throws IOException {
+        if (hotelDto.getStars() < 1 || hotelDto.getStars() > 5) {
+            return "redirect:/admin/hotels/addHotel";
+        }
         if (!file.isEmpty()) {
             byte[] imageBytes = file.getBytes();
             hotelDto.setImageToShow(imageBytes);

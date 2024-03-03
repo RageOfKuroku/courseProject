@@ -3,24 +3,50 @@
 <head>
     <title>Страница администратора</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/hotelsCSS.css">
     <style>
+        .btn-outline-secondary {
+            border-color: #720000;
+            color: #720000;
+        }
+        .card {
+            background-color: #FF88A2;
+            border: 0 solid;
+            display: block;
+        }
         .container {
             max-width: 960px;
         }
-
         .heading {
             margin: 2rem 0;
         }
-
-        .table-container {
-            margin: 2rem 0;
-            border: 1px solid #dee2e6;
-            border-radius: .25rem;
-            overflow: hidden;
+        .card-body {
+            background-color: #FF88A2;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            color: #6c757d;
+        }
+        .btn-primary {
+            background-color: #FFC0CB;
+            color: #800000;
         }
     </style>
 </head>
 <body>
+<div class="navbar">
+    <a href="/admin" class="logo">
+        <img src="/img/Sparkle_Sticker_02.png" alt="Админ"/>
+    </a>
+    <div class="text" style="text-align: center;">
+        <h1 style="font-family: 'Brush Script MT', cursive;">Административная страница</h1>
+    </div>
+    <a href="/hotels" class="logo" style="margin-left: auto;">
+        <img src="/img/Sparkle_Sticker_01.png" alt="Отели"/>
+    </a>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Администратор</a>
     <div class="collapse navbar-collapse">
@@ -68,21 +94,21 @@
                         <div class="form-group">
                             <label for="name">Название</label>
                             <input type="text" th:field="*{name}" class="form-control" id="name"
-                                   placeholder="Введите название отеля">
+                                   placeholder="Введите название отеля" required>
                         </div>
                         <div class="form-group">
                             <label for="address">Адрес</label>
                             <input type="text" th:field="*{address}" class="form-control" id="address"
-                                   placeholder="Введите адрес отеля">
+                                   placeholder="Введите адрес отеля" required>
                         </div>
                         <div class="form-group">
                             <label for="rating">Звёзды</label>
-                            <input type="number" th:field="*{stars}" class="form-control" id="rating"
-                                   placeholder="Введите звёзды отеля">
+                            <input type="number" th:field="*{stars}" class="form-control" id="rating" min="1" max="5"
+                                   placeholder="Введите звёзды отеля" required>
                         </div>
                         <div class="form-group">
                             <label>Изображение отеля</label><br>
-                            <input type="file" name="file" placeholder="Выберите Фото">
+                            <input type="file" name="file" placeholder="Выберите Фото" required>
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Добавить</button>
                     </form>

@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/auth.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #FFB6C1;
+    }
+  </style>
 </head>
 <body>
-<div class="container py-5">
+<div class="container form-container">
   <form th:method="post" th:action="@{/auth/login}" class="mx-auto" style="max-width: 300px;">
+    <h2>Login</h2>
     <div class="form-group">
       <label for="emailLogin">E-mail</label>
       <input type="email" id="emailLogin" placeholder="E-mail" name="emailLogin" class="form-control" required>

@@ -62,14 +62,21 @@ public class RoomService {
     }
 
 
-    public RoomDto updateRoom(Integer id, RoomDto dto) {
+    public void updateRoom(Integer id, RoomDto dto) {
         if(id != null){
-            roomMapper.update(roomRepository.getReferenceById(id), dto);
-            return dto;
+            RoomEntity roomEntity = roomRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Room with this ID not found"));
+            if(dto.getImageToShow() != null) {
+                roomMapper.update(roomEntity, dto);
+            } else {
+                roomMapper.updateWithoutImage(roomEntity, dto);
+            }
+            roomRepository.save(roomEntity);
         }else {
             throw new ResourceNotFoundException("Room with this ID not found");
         }
     }
+
 
     @Transactional
     public void deleteRoom(Integer roomId) {
@@ -81,12 +88,8 @@ public class RoomService {
         roomRepository.delete(room);
     }
 
-
     public void deleteAll(){
         roomRepository.deleteAll();
     }
 
-    public List<RoomEntity> getRoomEntitiesByHotelId(Integer id) {
-        return roomRepository.findByHotelId(id);
-    }
 }

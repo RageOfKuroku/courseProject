@@ -4,52 +4,85 @@
     <title>Отзывы на отели</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/reviewCSS.css">
+    <link rel="stylesheet" href="/styles/hotelsCSS.css">
 </head>
 <body>
+<div class="navbar">
+    <a href="/hotels" class="logo">
+        <img src="/img/Sparkle_Sticker_02.png" alt="Отели"/>
+    </a>
+    <div class="text" style="text-align: center;">
+        <h1 style="font-family: 'Brush Script MT', cursive;">Отзывы</h1>
+    </div>
+
+    <div th:if="${user != null}" class="user">
+        <form th:action="@{/user/profile}" th:method="get">
+            <button type="submit" class="btn btn-primary">Профиль</button>
+        </form>
+        <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
+            <button type="submit" class="btn btn-secondary">Администрирование</button>
+        </form>
+        <form th:action="@{/logout}" th:method="get">
+            <button type="submit" class="btn btn-primary">Выйти</button>
+        </form>
+    </div>
+    <div th:if="${user == null}" class="user">
+        <a href="/auth/login" class="btn btn-primary">Войти</a>
+    </div>
+</div>
 <div class="container">
-    <h1 class="text-center my-4">Отзывы на отели</h1>
+    <h1 class="text-center my-4" style="font-family: 'Brush Script MT', cursive;"
+        th:text="${newReview.hotel.name}"></h1>
+
     <table class="table table-striped">
         <tr>
             <th>Имя пользователя</th>
             <th>Оценка</th>
-            <th>Название отеля</th>
             <th>Впечатления</th>
         </tr>
         <tr th:each="review : ${reviews}">
             <td th:text="${review.user != null ? review.user.name : 'Аноним'}"></td>
             <td th:text="${review.rating}"></td>
-            <td th:text="${review.hotel.name}"></td>
             <td th:text="${review.impressions}"></td>
-            <td th:if="${review.user != null and user != null and review.user.name == user.name}">
+            <td th:if="${user != null and ((review.user != null and review.user.name == user.name) || user.role == user.role.ADMIN)}">
                 <form th:action="@{/reviews/{reviewId}/delete(reviewId=${review.id})}" method="post">
                     <button type="submit" class="btn btn-danger btn-sm">✖</button>
                 </form>
             </td>
         </tr>
     </table>
-
-    <h2 class="text-center my-4">Добавить отзыв</h2>
-    <form th:object="${newReview}" th:action="@{/reviews/hotel/{id}/add(id=${newReview.hotel.id})}" method="post" class="form-group">
-        <div class="form-row">
-            <div class="col">
-                <label>Оценка:
-                    <input type="number" th:field="*{rating}" class="form-control">
-                </label>
-            </div>
-            <div class="col">
-                <label>Отель:
-                    <input type="text" th:field="*{hotel.name}" class="form-control" readonly>
-                </label>
-            </div>
-        </div>
+    <form th:object="${newReview}" th:action="@{/reviews/hotel/{id}/add(id=${newReview.hotel.id})}" method="post">
+        <h2 class="text-center my-4">Добавить отзыв</h2>
         <div class="form-group">
-            <label>Впечатления:
-                <textarea th:field="*{impressions}" class="form-control"></textarea>
-            </label>
+            <div class="form-row">
+                <div class="col-3">
+                    <label>Оценка:
+                        <input type="number" th:field="*{rating}" class="form-control">
+                    </label>
+                </div>
+                <div class="col">
+                    <label>Впечатления:
+                        <textarea th:field="*{impressions}" class="form-control"></textarea>
+                    </label>
+                </div>
+            </div>
+            <input type="submit" value="Добавить" class="btn btn-danger btn-lg m-2"
+                   style="background-color: #800000; border: none;">
         </div>
-        <input type="submit" value="Добавить" class="btn btn-primary mt-3">
     </form>
-
+</div>
+<div class="footer" style="background-color: #FF88A2; color: #800000; position: absolute; bottom: 0; width: 100%;">
+    <div class="container text-center">
+        <p>© 2024 Отели</p>
+        <p>Пенакония, Мир Грёз</p>
+        <p>Телефон: (хх) ххх-хх-хх</p>
+        <p>Email: 20_morokey_04@mail.ru</p>
+        <div>
+            <a href="/ToS" style="color: #800000; margin-right: 10px;">Условия использования</a>
+            <a href="/Conf" style="color: #800000; margin-right: 10px;">Политика конфиденциальности</a>
+            <a href="/Contacts" style="color: #800000;">Контакты</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

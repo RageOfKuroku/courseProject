@@ -41,20 +41,22 @@ public class SecurityConfig {
 
 
         http.formLogin(cust -> {
-                    cust.loginPage("/auth/login");
-                    cust.usernameParameter("emailLogin");
-                    cust.passwordParameter("password");
-                    cust.successHandler((request, response, authentication) -> {
-                        String email = request.getParameter("emailLogin");
-                        String password = request.getParameter("password");
-                        response.sendRedirect("/hotels");
-                    });
-                    cust.failureHandler((request, response, authenticationException) -> {
-                        String email = request.getParameter("emailLogin");
-                        String password = request.getParameter("password");
-                        response.sendRedirect("/auth/login");
-                    });
-                });
+            cust.loginPage("/auth/login");
+            cust.usernameParameter("emailLogin");
+            cust.passwordParameter("password");
+            cust.successHandler((request, response, authentication) -> {
+                String email = request.getParameter("emailLogin");
+                String password = request.getParameter("password");
+                response.sendRedirect("/hotels");
+            });
+            cust.failureHandler((request, response, authenticationException) -> {
+                String email = request.getParameter("emailLogin");
+                String password = request.getParameter("password");
+                request.getSession().setAttribute("error", "Введён неверный логин или пароль");
+                response.sendRedirect("/auth/login");
+            });
+        });
+
 
         http.addFilterBefore(validFilter, SecurityContextHolderAwareRequestFilter.class);
         http.addFilterAfter(genFilter, LogoutFilter.class);

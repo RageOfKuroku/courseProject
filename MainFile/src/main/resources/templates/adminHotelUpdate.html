@@ -3,8 +3,20 @@
 <head>
   <title>Обновить данные отеля</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/hotelsCSS.css">
 </head>
 <body>
+<div class="navbar">
+  <a href="/admin" class="logo">
+    <img src="/img/Sparkle_Sticker_02.png" alt="Админ"/>
+  </a>
+  <div class="text" style="text-align: center;">
+    <h1 style="font-family: 'Brush Script MT', cursive;">Административная страница</h1>
+  </div>
+  <a href="/hotels" class="logo" style="margin-left: auto;">
+    <img src="/img/Sparkle_Sticker_01.png" alt="Отели"/>
+  </a>
+</div>
 <div class="container py-5">
   <h2 class="my-4">Обновить данные отеля</h2>
   <form th:action="@{/admin/hotels/update/{id}(id=${hotel.id})}" th:method="post" enctype="multipart/form-data">

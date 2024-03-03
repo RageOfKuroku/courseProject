@@ -1,0 +1,21 @@
+.flex-column {
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+}
+.d-flex {
+    display: block !important;
+}
+.container {
+    max-width: 960px;
+}
+
+.heading {
+    margin: 2rem 0;
+}
+
+.table-container {
+    margin: 2rem 0;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    overflow: hidden;
+}

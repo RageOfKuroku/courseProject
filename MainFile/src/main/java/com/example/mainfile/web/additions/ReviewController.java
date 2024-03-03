@@ -51,12 +51,17 @@ public class ReviewController {
     public String addReview(@PathVariable("hotelId") Integer hotelId,
                             @ModelAttribute("newReview") @Valid ReviewDto reviewDto,
                             BindingResult result, Model model, @AuthenticationPrincipal UserEntity user) {
+        if (reviewDto.getRating() < 1 || reviewDto.getRating() > 10) {
+            model.addAttribute("ratingError", "Оценка должна быть между 1 и 10");
+            return showReviews(hotelId, user, model);
+        }
         if (result.hasErrors()) {
             return showReviews(hotelId, user, model);
         }
         reviewService.addReview(reviewDto, user, hotelId);
         return "redirect:/reviews/hotel/" + hotelId;
     }
+
 
     @PostMapping("/{reviewId}/delete")
     public String deleteReview(@PathVariable("reviewId") Integer reviewId, @AuthenticationPrincipal UserEntity currentUser) {

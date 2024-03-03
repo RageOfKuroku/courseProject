@@ -3,46 +3,36 @@
 <head>
     <title>Страница отеля</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .hotel-image {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-        .hotel-details {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        .hotel-details h1, p {
-            margin: 0;
-        }
-        .room-card {
-            width: 200px;
-            margin-bottom: 20px;
-        }
-        .room-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/hotelsCSS.css">
+    <link rel="stylesheet" href="/styles/room.css">
 </head>
 <body>
+<div class="navbar">
+    <a href="/hotels" class="logo">
+        <img src="/img/Sparkle_Sticker_02.png" alt="Отели"/>
+    </a>
+    <div th:if="${user != null}" class="user">
+        <form th:action="@{/user/profile}" th:method="get">
+            <button type="submit" class="btn btn-primary">Профиль</button>
+        </form>
+        <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
+            <button type="submit" class="btn btn-secondary">Администрирование</button>
+        </form>
+        <form th:action="@{/logout}" th:method="get">
+            <button type="submit" class="btn btn-primary">Выйти</button>
+        </form>
+    </div>
+    <div th:if="${user == null}" class="user">
+        <a href="/auth/login" class="btn btn-primary">Войти</a>
+    </div>
+</div>
 <div class="container py-5">
     <div class="hotel-details">
-        <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
+        <img th:src="@{'data:image/png;base64,'+${hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image-rooms">
         <div>
-            <h1 th:text="${hotel.name}" class="display-4"></h1>
-            <p th:text="${hotel.address}" class="lead"></p>
-            <p th:text="${hotel.rating}" class="lead"></p>
+            <h1 th:text="${hotel.name}" class="display-4">Название</h1>
+            <p th:text="${hotel.address}" class="lead">Адрес</p>
+            <p th:text="${hotel.rating}" class="lead">Рейтинг</p>
         </div>
     </div>
     <h2 class="my-4 display-5">Список комнат</h2>
@@ -51,9 +41,9 @@
             <img th:src="@{'data:image/png;base64,'+${room.getRoomImageFromBytes()}}" alt="roomPhoto" class="room-image card-img-top">
             <div class="card-body">
                 <h5 class="card-title" th:text="${room.roomType}"></h5>
-                <p class="card-text" th:text="${room.description}"></p>
                 <p class="card-text"><strong>Цена:</strong> <span th:text="${room.roomPrice}"></span></p>
                 <p class="card-text"><strong>Статус:</strong> <span th:text="${room.roomStatus}"></span></p>
+                <p class="card-text description" th:text="${room.description}"></p>
                 <button class="btn btn-primary" data-toggle="modal" th:attr="data-target='#bookingModal' + ${room.roomId}" th:if="${room.roomStatus != room.roomStatus.BOOKED}">Забронировать</button>
             </div>
             <div class="modal fade" th:id="'bookingModal' + ${room.roomId}" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
@@ -76,18 +66,35 @@
                                     <label for="endDate">Дата окончания:</label>
                                     <input type="date" id="endDate" name="endDate" class="form-control" required>
                                 </div>
+                                <div th:if="${error != null}" class="alert alert-danger" role="alert">
+                                    <p th:text="${error}"></p>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                                 <button type="submit" class="btn btn-primary">Забронировать</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>
+</div>
+<div class="footer" style="background-color: #FF88A2; color: #800000; padding: 20px; position: relative; bottom: 0; width: 100%;">
+    <div class="container text-center">
+        <p>© 2024 Отели</p>
+        <p>Пенакония, Мир Грёз</p>
+        <p>Телефон: (хх) ххх-хх-хх</p>
+        <p>Email: 20_morokey_04@mail.ru</p>
+        <div>
+            <a href="/ToS" style="color: #800000; margin-right: 10px;">Условия использования</a>
+            <a href="/Conf" style="color: #800000; margin-right: 10px;">Политика конфиденциальности</a>
+            <a href="/Contacts" style="color: #800000;">Контакты</a>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

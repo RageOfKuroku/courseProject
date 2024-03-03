@@ -3,6 +3,7 @@
 <head>
   <title>Customer Page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/hotelsCSS.css">
   <style>
     .form-group {
       margin-bottom: 1rem;
@@ -49,6 +50,33 @@
   </style>
 </head>
 <body>
+<div class="navbar">
+  <a href="/hotels" class="logo">
+    <img src="/img/Sparkle_Sticker_02.png" alt="Отели"/>
+  </a>
+  <div class="search">
+    <form th:action="@{/hotels/search}" method="get" class="search-form">
+      <input type="text" name="query" class="form-control" placeholder="Поиск отелей">
+      <button type="submit" class="btn btn-primary">Найти</button>
+    </form>
+  </div>
+
+
+  <div th:if="${user != null}" class="user">
+    <form th:action="@{/user/profile}" th:method="get">
+      <button type="submit" class="btn btn-primary">Профиль</button>
+    </form>
+    <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
+      <button type="submit" class="btn btn-secondary">Администрирование</button>
+    </form>
+    <form th:action="@{/logout}" th:method="get">
+      <button type="submit" class="btn btn-primary">Выйти</button>
+    </form>
+  </div>
+  <div th:if="${user == null}" class="user">
+    <a href="/auth/login" class="btn btn-primary">Войти</a>
+  </div>
+</div>
 <div class="container py-5">
   <h1 class="mb-4 text-center">Customer Details</h1>
   <form th:action="@{/user/update}" th:object="${user}" th:method="post" class="mb-5">
@@ -81,6 +109,19 @@
     </div>
   </div>
   <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>
+</div>
+<div class="footer" style="background-color: #FF88A2; color: #800000; padding: 20px; position: relative; bottom: 0; width: 100%;">
+  <div class="container text-center">
+    <p>© 2024 Отели</p>
+    <p>Пенакония, Мир Грёз</p>
+    <p>Телефон: (хх) ххх-хх-хх</p>
+    <p>Email: 20_morokey_04@mail.ru</p>
+    <div>
+      <a href="/ToS" style="color: #800000; margin-right: 10px;">Условия использования</a>
+      <a href="/Conf" style="color: #800000; margin-right: 10px;">Политика конфиденциальности</a>
+      <a href="/Contacts" style="color: #800000;">Контакты</a>
+    </div>
+  </div>
 </div>
 </body>
 </html>

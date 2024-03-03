@@ -37,6 +37,9 @@ public class AdminRoomController {
 
     @PostMapping("/add/{id}")
     public String addRoom(@PathVariable Integer id, @ModelAttribute RoomDto room, @RequestParam(value = "file") MultipartFile file) throws IOException {
+        if (room.getRoomPrice() < 0) {
+            return "redirect:/admin/hotels/rooms/" + id;
+        }
         HotelDto hotel = hotelService.getHotelById(id);
         room.setHotel(hotel);
         room.setImageToShow(file.getBytes());
@@ -54,11 +57,6 @@ public class AdminRoomController {
         return service.getRoomById(id);
     }
 
-    @PutMapping("/{id}")
-    public RoomDto updateRoom(@PathVariable Integer id, @RequestBody RoomDto roomDto) {
-
-        return service.updateRoom(id, roomDto);
-    }
 
     @PostMapping("/delete/{id}")
     public String deleteRoom(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
@@ -68,6 +66,29 @@ public class AdminRoomController {
         redirectAttributes.addFlashAttribute("message", "Комната успешно удалена!");
         return "redirect:/admin/hotels/rooms/" + hotelId;
     }
+
+    @PostMapping("/updateRoom")
+    public String updateRoom(@ModelAttribute RoomDto room, @RequestParam("file") MultipartFile file) throws IOException {
+        if (room.getRoomPrice() < 0) {
+            return "redirect:/admin/hotels/rooms/" + room.getHotel().getId();
+        }
+        RoomDto existingRoom = service.getRoomById(room.getRoomId());
+        if (!file.isEmpty()) {
+            byte[] imageBytes = file.getBytes();
+            existingRoom.setImageToShow(imageBytes);
+        }
+        existingRoom.setRoomType(room.getRoomType());
+        existingRoom.setRoomStatus(room.getRoomStatus());
+        existingRoom.setDescription(room.getDescription());
+        existingRoom.setRoomPrice(room.getRoomPrice());
+
+        service.updateRoom(existingRoom.getRoomId(),existingRoom);
+
+        return "redirect:/admin/hotels/rooms/" + existingRoom.getHotel().getId();
+    }
+
+
+
 
 
 }

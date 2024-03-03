@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Страница администратора</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Страница администратора</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/hotelsCSS.css">
 </head>
 <body>
-<div class="container py-5">
-  <div class="jumbotron text-center">
-    <h1 class="display-4">Страница администратора</h1>
-    <p class="lead">Добро пожаловать на страницу администратора. Здесь вы можете управлять отелями и пользователями.</p>
-    <hr class="my-4">
-    <p>Выберите одну из следующих опций:</p>
-    <div class="d-flex justify-content-around mb-3">
-      <a class="btn btn-primary btn-lg btn-block w-25" th:href="@{/admin/hotels/addHotel}" role="button">Список отелей</a>
-      <a class="btn btn-danger btn-lg btn-block w-25" th:href="@{/admin/users}" role="button">Список пользователей</a>
+<div class="navbar">
+    <a href="/admin" class="logo">
+        <img src="/img/Sparkle_Sticker_02.png" alt="Админ"/>
+    </a>
+    <div class="text" style="text-align: center;">
+        <h1 style="font-family: 'Brush Script MT', cursive;">Административная страница</h1>
     </div>
-  </div>
+    <a href="/hotels" class="logo" style="margin-left: auto;">
+        <img src="/img/Sparkle_Sticker_01.png" alt="Отели"/>
+    </a>
+</div>
+
+
+<div class="container py-5">
+    <div class="jumbotron text-center" style="background-color: #FFC0CB; border-radius: 15px;">
+        <h1 class="display-4" style="color: #800000; font-family: 'Brush Script MT', cursive;">⋇⋆✦⋆⋇</h1>
+        <p class="lead" style="color: #800000;">Добро пожаловать на страницу администратора. Здесь вы можете управлять отелями и
+            пользователями.</p>
+        <hr class="my-4" style="border-top: 1px solid #800000;">
+        <p style="color: #800000;">Выберите одну из следующих опций:</p>
+        <div class="d-flex justify-content-center mb-3">
+            <a class="btn btn-primary btn-lg m-2" th:href="@{/admin/hotels/addHotel}" role="button" style="background-color: #800000; border: none;">Список
+                отелей</a>
+            <a class="btn btn-danger btn-lg m-2" th:href="@{/admin/users}" role="button" style="background-color: #800000; border: none;">Список
+                пользователей</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -23,6 +23,8 @@ public abstract class UserMapper {
     @Mapping(target = "email", source = "email")
     @Mapping(target = "role", defaultValue = "USER")
     @Mapping(target = "version", source = "version")
+    @Mapping(target = "dateOfCreation", ignore = true)
+    @Mapping(target = "dateOfUpdate", ignore = true)
     public abstract UserEntity toEntity(UserDto dto);
 
     @Mapping(target = "id", source = "id")

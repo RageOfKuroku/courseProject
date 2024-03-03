@@ -68,7 +68,7 @@ public class ReviewService {
     public Integer deleteReview(Integer reviewId, UserEntity currentUser) {
         ReviewEntity review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResourceNotFoundException("Review not found"));
         Integer hotelId = review.getHotel().getId();
-        if (review.getUser().equals(currentUser)) {
+        if (review.getUser().equals(currentUser) || currentUser.getRole() == Role.ADMIN) {
             reviewRepository.delete(review);
         }
 
@@ -76,6 +76,7 @@ public class ReviewService {
 
         return hotelId;
     }
+
 
 
 

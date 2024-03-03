@@ -8,10 +8,13 @@ import com.example.mainfile.repository.ReviewRepository;
 import com.example.mainfile.service.*;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,15 +63,17 @@ public class HotelController {
     }
 
     @GetMapping("/details/{id}")
-    public String showHotelDetails(@PathVariable Integer id, Model model) {
+    public String showHotelDetails(@PathVariable Integer id, Model model, @AuthenticationPrincipal UserEntity user) {
         HotelDto hotel = service.getHotelById(id);
         model.addAttribute("hotel", hotel);
         RoomDto room = RoomDto.builder().hotel(hotel).build();
         model.addAttribute("room", room);
         List<RoomDto> rooms = roomService.getRoomsByHotelId(id);
         model.addAttribute("hotelRooms", rooms);
+        model.addAttribute("user", user);
         return "hotelPage";
     }
+
 
 
     @PostMapping("/update/{id}")
@@ -81,8 +86,10 @@ public class HotelController {
         return "redirect:/hotels/" + id;
     }
 
+
+
     @PostMapping("/bookRoom")
-    public String bookRoom(@RequestParam Integer roomId, @ModelAttribute BookingDto bookingDto, @AuthenticationPrincipal UserEntity userEntity) {
+    public String bookRoom(@RequestParam Integer roomId, @ModelAttribute BookingDto bookingDto, @AuthenticationPrincipal UserEntity userEntity, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (userEntity != null) {
             Optional<UserDto> optionalUser = userService.getById(userEntity.getId());
 
@@ -90,6 +97,11 @@ public class HotelController {
                 UserDto user = optionalUser.get();
                 bookingDto.setUser(user);
 
+                if (bookingDto.getStartDate().isAfter(bookingDto.getEndDate())) {
+                    redirectAttributes.addFlashAttribute("error", "Дата начала не может быть позже даты окончания");
+                    redirectAttributes.addFlashAttribute("roomId", roomId);
+                    return "redirect:/hotels";
+                }
 
                 bookingService.saveBooking(roomId, bookingDto, user.getId());
             }
@@ -97,6 +109,8 @@ public class HotelController {
 
         return "redirect:/hotels";
     }
+
+
 
     @GetMapping("/sortByStars")
     public String sortByStars(@RequestParam Integer stars, Model model, @AuthenticationPrincipal UserEntity user) {
@@ -116,6 +130,8 @@ public class HotelController {
 
         return "hotelsPage";
     }
+
+
 
     @GetMapping("/search")
     public String search(@RequestParam String query, Model model, @AuthenticationPrincipal UserEntity user) {
