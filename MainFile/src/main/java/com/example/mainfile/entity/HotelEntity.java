@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
-import java.util.Base64;
-import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
@@ -18,7 +16,7 @@ public class HotelEntity {
     private Integer id;
     private String name;
     private String address;
-    @Column(nullable = true)
+    @Column
     private Double rating;
     private String description;
     @Min(1)@Max(5)

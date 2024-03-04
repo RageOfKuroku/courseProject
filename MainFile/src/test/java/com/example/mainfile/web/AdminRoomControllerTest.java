@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ADMIN"})
@@ -33,20 +36,22 @@ public class AdminRoomControllerTest {
     private AdminRoomController adminRoomController;
 
     @Test
+    @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
     public void testShowRoomsPage() throws Exception {
-        mockMvc.perform(get("/admin/hotels/rooms/{id}", 1))
+        mockMvc.perform(get("/admin/hotels/rooms/{id}", 10)) //Поставить актуальное значение id отеля
                 .andExpect(status().isOk())
                 .andExpect(view().name("adminPageRooms"));
     }
 
     @Test
+    @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
     public void testAddRoom() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "hello.txt", "text/plain", "Hello, World!".getBytes());
-        mockMvc.perform(multipart("/admin/hotels/rooms/add/{id}", 1)
+        mockMvc.perform(multipart("/admin/hotels/rooms/add/{id}", 10) //Поставить актуальное значение id отеля
                         .file(file)
                         .param("roomPrice", "100"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/hotels/rooms/1"));
+                .andExpect(redirectedUrl("/admin/hotels/rooms/10"));
     }
 
 }

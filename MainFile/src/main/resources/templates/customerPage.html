@@ -2,72 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Customer Page</title>
+  <link rel="stylesheet" href="/styles/customer.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles/hotelsCSS.css">
-  <style>
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    .table {
-      width: 100%;
-      margin-bottom: 1rem;
-      color: #212529;
-    }
-    .btn-primary {
-      color: #fff;
-      background-color: #0d6efd;
-      border-color: #0d6efd;
-    }
-    .container {
-      width: 100%;
-      padding-right: 15px;
-      padding-left: 15px;
-      margin-right: auto;
-      margin-left: auto;
-      max-width: 960px;
-    }
-    .hotel-card {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      max-width: 300px;
-    }
-    .hotel-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-    .hotels-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-  </style>
 </head>
 <body>
 <div class="navbar">
   <a href="/hotels" class="logo">
     <img src="/img/Sparkle_Sticker_02.png" alt="Отели"/>
   </a>
-  <div class="search">
-    <form th:action="@{/hotels/search}" method="get" class="search-form">
-      <input type="text" name="query" class="form-control" placeholder="Поиск отелей">
-      <button type="submit" class="btn btn-primary">Найти</button>
-    </form>
-  </div>
-
-
   <div th:if="${user != null}" class="user">
     <form th:action="@{/user/profile}" th:method="get">
       <button type="submit" class="btn btn-primary">Профиль</button>
     </form>
     <form th:action="@{/admin}" th:method="get" th:if="${user.role == user.role.ADMIN}">
-      <button type="submit" class="btn btn-secondary">Администрирование</button>
+      <button type="submit" class="btn btn-primary">Администрирование</button>
     </form>
     <form th:action="@{/logout}" th:method="get">
       <button type="submit" class="btn btn-primary">Выйти</button>
@@ -100,12 +48,13 @@
     <div th:each="booking, stat : ${bookings}" class="hotel-card">
       <img th:src="@{'data:image/png;base64,'+${booking.room.hotel.getImageFromBytes()}}" alt="hotelPhoto" class="hotel-image">
       <div>
-        <h2 th:text="${booking.room.getHotel().name}"></h2>
-        <p th:text="${booking.startDate.toString()}"></p>
-        <p th:text="${booking.endDate.toString()}"></p>
-        <p th:text="${booking.room.roomType}"></p>
-        <p th:text="${booking.room.roomPrice}"></p>
+        <h2>Отель: <span th:text="${booking.room.getHotel().name}"></span></h2>
+        <p>Дата начала бронирования: <span th:text="${booking.startDate.toString()}"></span></p>
+        <p>Дата окончания бронирования: <span th:text="${booking.endDate.toString()}"></span></p>
+        <p>Тип комнаты: <span th:text="${booking.room.roomType}"></span></p>
+        <p>Цена комнаты: <span th:text="${booking.room.roomPrice}"></span></p>
       </div>
+
     </div>
   </div>
   <a href="/hotels" class="btn btn-primary mt-3">Возврат к отелям</a>

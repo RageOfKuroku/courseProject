@@ -1,6 +1,5 @@
 package com.example.mainfile.web.user;
 
-import com.example.mainfile.dto.BookingDto;
 import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.exception.ResourceNotFoundException;
@@ -11,11 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -47,10 +43,4 @@ public class UserController {
             throw new ResourceNotFoundException("User with this id does not exist");
         }
     }
-
-
-
-
-
-
 }

@@ -1,14 +1,11 @@
 package com.example.mainfile.web.user;
 
 import com.example.mainfile.dto.*;
-import com.example.mainfile.entity.HotelEntity;
-import com.example.mainfile.entity.RoomEntity;
 import com.example.mainfile.entity.UserEntity;
 import com.example.mainfile.repository.ReviewRepository;
 import com.example.mainfile.service.*;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -149,7 +146,5 @@ public class HotelController {
         model.addAttribute("reviewsCount", reviewsCount);
         return "hotelsPage";
     }
-
-
 
 }

@@ -2,8 +2,6 @@ package com.example.mainfile.web.admin;
 
 import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.RoomDto;
-import com.example.mainfile.entity.HotelEntity;
-import com.example.mainfile.entity.RoomEntity;
 import com.example.mainfile.service.HotelService;
 import com.example.mainfile.service.RoomService;
 import lombok.RequiredArgsConstructor;

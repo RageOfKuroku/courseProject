@@ -1,15 +1,9 @@
 package com.example.mainfile.mapper;
 
 import com.example.mainfile.dto.BookingDto;
-import com.example.mainfile.dto.UserDto;
 import com.example.mainfile.entity.BookingEntity;
-import com.example.mainfile.entity.UserEntity;
-import com.example.mainfile.repository.RoomRepository;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.print.Book;
 import java.util.List;

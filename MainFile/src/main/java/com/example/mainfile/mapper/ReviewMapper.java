@@ -1,8 +1,6 @@
 package com.example.mainfile.mapper;
 
-import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.ReviewDto;
-import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.entity.ReviewEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,5 @@
 package com.example.mainfile.service;
 
-import com.example.mainfile.dto.HotelDto;
 import com.example.mainfile.dto.ReviewDto;
 import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.entity.ReviewEntity;
@@ -11,13 +10,10 @@ import com.example.mainfile.mapper.ReviewMapper;
 import com.example.mainfile.model.Role;
 import com.example.mainfile.repository.ReviewRepository;
 import com.example.mainfile.repository.HotelRepository;
-import com.example.mainfile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {

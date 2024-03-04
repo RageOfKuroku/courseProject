@@ -1,0 +1,119 @@
+body {
+    background: linear-gradient(to right, #FFB6C1, #FF69B4, #8A2BE2);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background: linear-gradient(to right, #FFB6C1, #FF69B4, #8A2BE2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.navbar button {
+    background-color: transparent;
+    border: none;
+    color: #FFB6C1;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+    transition: color 0.3s;
+}
+
+.navbar button:hover {
+    color: #FF69B4;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user form {
+    margin-right: 10px;
+}
+
+.container {
+    text-align: center;
+}
+
+.hotel-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.hotel-details img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.hotel-details div {
+    text-align: left;
+}
+
+.hotel-details h1 {
+    margin-bottom: 10px;
+}
+
+.room-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.room-card {
+    width: 300px;
+    margin: 20px;
+}
+
+.room-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-dialog {
+    max-width: 500px;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.footer {
+    background-color: #FF88A2;
+    color: #800000;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a {
+    color: #800000;
+    margin-right: 10px;
+}

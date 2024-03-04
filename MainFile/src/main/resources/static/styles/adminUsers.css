@@ -1,0 +1,96 @@
+body {
+    background: linear-gradient(to right, #FFB6C1, #FF69B4, #8A2BE2);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background: linear-gradient(to right, #FFB6C1, #FF69B4, #8A2BE2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 80px;
+}
+
+.text h1 {
+    font-family: 'Brush Script MT', cursive;
+    color: #fff;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.table {
+    background-color: #fff;
+}
+
+.table th, .table td {
+    border: none;
+}
+
+.table thead th {
+    background-color: #8A2BE2;
+    color: #fff;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-striped tbody tr:nth-child(odd) td {
+    background-color: #f5f5f5;
+}
+
+
+.collapse.show {
+    display: block;
+}
+
+
+.arrow.collapsed {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+
+.btn[data-toggle="collapse"] {
+    position: relative;
+}
+
+.arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.btn-primary {
+    background-color: #8A2BE2;
+    border-color: #8A2BE2;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #FF69B4;
+    border-color: #FF69B4;
+}
+
+.btn-danger {
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #800000;
+    border-color: #800000;
+}

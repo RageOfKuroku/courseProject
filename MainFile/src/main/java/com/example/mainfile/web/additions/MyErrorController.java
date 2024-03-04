@@ -22,7 +22,7 @@ public class MyErrorController implements ErrorController {
                 return "sparkle";
             }
         }
-        return "/error";
+        return "redirect:/hotels";
     }
 
 

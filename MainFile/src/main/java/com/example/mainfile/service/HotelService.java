@@ -74,11 +74,6 @@ public class HotelService {
 
         hotelRepository.delete(hotel);
     }
-
-    public void deleteAll(){
-        hotelRepository.deleteAll();
-    }
-
     public List<HotelDto> searchHotels(String searchName, String searchAddress) {
         return hotelMapper.toListDto(hotelRepository.findByNameContainingAndAddressContaining(searchName, searchAddress));
     }

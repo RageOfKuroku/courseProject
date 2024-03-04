@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Список отелей</title>
+    <link rel="stylesheet" href="/styles/hotels.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles/hotelsCSS.css">
+
 </head>
 <body>
 <div class="navbar">
@@ -16,8 +17,6 @@
             <button type="submit" class="btn btn-primary">Найти</button>
         </form>
     </div>
-
-
     <div th:if="${user != null}" class="user">
         <form th:action="@{/user/profile}" th:method="get">
             <button type="submit" class="btn btn-primary">Профиль</button>

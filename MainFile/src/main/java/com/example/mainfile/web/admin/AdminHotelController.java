@@ -1,7 +1,6 @@
 package com.example.mainfile.web.admin;
 
 import com.example.mainfile.dto.HotelDto;
-import com.example.mainfile.entity.HotelEntity;
 import com.example.mainfile.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
