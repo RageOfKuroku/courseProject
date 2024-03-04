@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/Hotels
+    url: jdbc:postgresql://localhost:5432/hotels
   h2:
     console:
       enabled: true

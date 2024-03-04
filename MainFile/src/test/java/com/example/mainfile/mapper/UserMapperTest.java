@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,7 +29,6 @@ public class UserMapperTest {
 
         assertEquals(dto.getEmail(), entity.getEmail());
     }
-
 
     @Test
     public void testToDto() {
@@ -63,7 +62,15 @@ public class UserMapperTest {
         assertEquals(entity.getEmail(), dtos.get(0).getEmail());
     }
 
+    @Test
+    public void testDtoWithNullFields() {
+        UserEntity entity = new UserEntity();
+        entity.setPassword(null);
 
+        UserDto dto = userMapper.toDto(entity);
 
+        assertNull(dto.getPassword());
+    }
 }
+
 
